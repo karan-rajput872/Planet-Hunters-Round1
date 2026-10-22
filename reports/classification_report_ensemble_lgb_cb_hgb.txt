@@ -1,0 +1,17 @@
+Model: Ensemble_LGB_CB_HGB
+Macro F1: 0.5886
+
+                   precision    recall  f1-score   support
+
+           planet     0.4647    0.4452    0.4548       429
+ eclipsing_binary     0.8554    0.6192    0.7183       449
+background_binary     0.6154    0.5483    0.5799       321
+        starspots     0.4766    0.4062    0.4386       576
+   pulsating_star     0.6539    0.6506    0.6523       395
+       flare_star     0.6034    0.4848    0.5376       361
+instrument_glitch     0.7447    0.7122    0.7281       344
+       quiet_star     0.5014    0.7434    0.5989       725
+
+         accuracy                         0.5819      3600
+        macro avg     0.6144    0.5762    0.5886      3600
+     weighted avg     0.5976    0.5819    0.5813      3600

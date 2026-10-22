@@ -1,0 +1,9 @@
+experiment,n_features,macro_f1,delta_f1,planet_f1,bg_binary_f1,starspots_f1,glitch_f1,runtime_s
+All 85 Features,85,0.5917,0.0001,0.4428,0.5585,0.4425,0.7448,51.44
+Minus Group 1 (Flux Stats),62,0.5889,-0.0027,0.4514,0.5521,0.4456,0.736,47.97
+Minus Group 2 (Detrended Transit),68,0.5671,-0.0245,0.3776,0.522,0.4245,0.722,50.1
+Minus Group 3 (Centroid Vetting),73,0.5761,-0.0155,0.4507,0.5439,0.4403,0.6634,46.13
+Minus Group 4 (Periodicity & Freq),74,0.5716,-0.02,0.4332,0.561,0.4103,0.6949,41.63
+Minus Group 5 (Flare Features),75,0.5895,-0.0021,0.4568,0.5606,0.4444,0.7468,45.82
+Minus Group 6 (Stellar Metadata),76,0.5776,-0.014,0.4296,0.551,0.437,0.7488,38.27
+Minus Group 7 (Cadence Quality),82,0.5905,-0.0011,0.4382,0.5557,0.451,0.7444,39.14

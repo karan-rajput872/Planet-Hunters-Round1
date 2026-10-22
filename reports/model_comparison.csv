@@ -1,0 +1,6 @@
+model,macro_f1,weighted_f1,train_time_sec
+LightGBM,0.5914,0.5852,10.78
+Ensemble (LGB+CB+HGB),0.5886,0.5813,0.0
+HistGradientBoosting,0.5709,0.5633,15.28
+CatBoost,0.5512,0.5449,21.86
+ExtraTrees,0.5234,0.52,0.93

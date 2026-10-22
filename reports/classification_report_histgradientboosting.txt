@@ -1,0 +1,17 @@
+Model: HistGradientBoosting
+Macro F1: 0.5709
+
+                   precision    recall  f1-score   support
+
+           planet     0.4572    0.4359    0.4463       429
+ eclipsing_binary     0.8455    0.6214    0.7163       449
+background_binary     0.5663    0.5452    0.5556       321
+        starspots     0.4671    0.3698    0.4128       576
+   pulsating_star     0.6072    0.6810    0.6420       395
+       flare_star     0.5472    0.4820    0.5125       361
+instrument_glitch     0.6878    0.7238    0.7054       344
+       quiet_star     0.5026    0.6745    0.5760       725
+
+         accuracy                         0.5653      3600
+        macro avg     0.5851    0.5667    0.5709      3600
+     weighted avg     0.5736    0.5653    0.5633      3600

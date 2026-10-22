@@ -1,0 +1,17 @@
+Model: LightGBM
+Macro F1: 0.5914
+
+                   precision    recall  f1-score   support
+
+           planet     0.4759    0.4382    0.4563       429
+ eclipsing_binary     0.8423    0.6303    0.7210       449
+background_binary     0.6190    0.5265    0.5690       321
+        starspots     0.4568    0.4497    0.4532       576
+   pulsating_star     0.6814    0.6228    0.6508       395
+       flare_star     0.6525    0.4681    0.5452       361
+instrument_glitch     0.7752    0.6919    0.7312       344
+       quiet_star     0.5009    0.7614    0.6043       725
+
+         accuracy                         0.5844      3600
+        macro avg     0.6255    0.5736    0.5914      3600
+     weighted avg     0.6052    0.5844    0.5852      3600

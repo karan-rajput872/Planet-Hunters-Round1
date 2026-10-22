@@ -1,0 +1,105 @@
+# ==============================================================================
+# Planet Hunters — Git Ignore Configuration (Hack4Hack 2026 Round 1)
+# ==============================================================================
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables, Secrets & Credentials
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+id_rsa
+id_rsa.pub
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+*.bak
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Logs & Temporary Files
+*.log
+logs/
+scratch/
+tmp/
+temp/
+
+# OS-Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Competition Datasets (Strictly exclude all raw & processed competition data)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/*.csv
+data/*.parquet
+data/*.npy
+
+# Trained Model Binaries (Strictly exclude all serialized model weights & bundles)
+models/*.joblib
+models/**/*.joblib
+models/cv_models/*
+!models/cv_models/.gitkeep
+models/tuned_cv_models/*
+!models/tuned_cv_models/.gitkeep
+catboost_info/
+lightning_logs/
+wandb/
+
+# Competition Submissions (Strictly local; do not publish predictions)
+submissions/*
+!submissions/.gitkeep
+
+# Distribution Archives & Packaging Files (Exclude ZIPs and archives)
+dist/*
+!dist/.gitkeep
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Always preserve directory structure placeholders
+!**/.gitkeep

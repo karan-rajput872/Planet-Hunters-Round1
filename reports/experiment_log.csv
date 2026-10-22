@@ -1,0 +1,11 @@
+timestamp,experiment_name,model_type,n_features,macro_f1,runtime_seconds,notes
+2026-10-22 11:18:44,benchmark_histgradientboosting,HistGradientBoosting,71,0.5541,13.38,80/20 Stratified Validation
+2026-10-22 11:18:54,benchmark_lightgbm,LightGBM,71,0.5648,8.6,80/20 Stratified Validation
+2026-10-22 11:19:13,benchmark_catboost,CatBoost,71,0.5328,18.05,80/20 Stratified Validation
+2026-10-22 11:19:16,benchmark_extratrees,ExtraTrees,71,0.5099,0.94,80/20 Stratified Validation
+2026-10-22 11:19:17,ensemble_lgb_cb_hgb,Ensemble,71,0.5622,0.0,Probability blend: 0.45 LGB + 0.35 CB + 0.20 HGB
+2026-10-22 11:25:13,benchmark_histgradientboosting,HistGradientBoosting,85,0.5709,15.28,80/20 Stratified Validation
+2026-10-22 11:25:25,benchmark_lightgbm,LightGBM,85,0.5914,10.78,80/20 Stratified Validation
+2026-10-22 11:25:48,benchmark_catboost,CatBoost,85,0.5512,21.86,80/20 Stratified Validation
+2026-10-22 11:25:52,benchmark_extratrees,ExtraTrees,85,0.5234,0.93,80/20 Stratified Validation
+2026-10-22 11:25:53,ensemble_lgb_cb_hgb,Ensemble,85,0.5886,0.0,Probability blend: 0.45 LGB + 0.35 CB + 0.20 HGB

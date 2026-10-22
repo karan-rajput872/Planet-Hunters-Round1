@@ -1,0 +1,17 @@
+Model: CatBoost
+Macro F1: 0.5512
+
+                   precision    recall  f1-score   support
+
+           planet     0.4471    0.4732    0.4598       429
+ eclipsing_binary     0.8466    0.5902    0.6955       449
+background_binary     0.5089    0.5358    0.5220       321
+        starspots     0.4947    0.3247    0.3920       576
+   pulsating_star     0.5705    0.6658    0.6145       395
+       flare_star     0.5097    0.5097    0.5097       361
+instrument_glitch     0.6237    0.6890    0.6547       344
+       quiet_star     0.5027    0.6345    0.5610       725
+
+         accuracy                         0.5475      3600
+        macro avg     0.5630    0.5529    0.5512      3600
+     weighted avg     0.5580    0.5475    0.5449      3600
