@@ -88,9 +88,10 @@ catboost_info/
 lightning_logs/
 wandb/
 
-# Competition Submissions (Strictly local; do not publish predictions)
+# Competition Submissions (Keep experimental candidates local, track approved final submission)
 submissions/*
 !submissions/.gitkeep
+!submissions/submission_FINAL.csv
 
 # Distribution Archives & Packaging Files (Exclude ZIPs and archives)
 dist/*

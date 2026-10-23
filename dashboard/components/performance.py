@@ -1,6 +1,7 @@
 """
-Component B: Performance Intelligence & Model Evaluation Suite
-Professional ML Validation Report with Benchmark Progression & Per-Class Metrics
+Component C & G: Key Model Performance & Error Analysis
+Planet Hunters — Scientific Intelligence Platform
+Compact KPI cards with equal heights, benchmark progression, and verified error insights.
 """
 
 import streamlit as st
@@ -9,136 +10,138 @@ import plotly.graph_objects as go
 from dashboard.data_loader import PROJECT_METRICS, MODEL_BENCHMARKS, CLASS_EVALUATION_METRICS
 from dashboard.styles import get_plotly_layout
 
-def render_performance(theme: str = "light"):
-    """Renders Performance Intelligence cards, benchmark progression, and per-class metrics."""
-    sub_color = "#94A3B8" if theme == "dark" else "#667085"
-    primary_color = "#3B82F6" if theme == "dark" else "#2457D6"
-    card_bg = "#131D2E" if theme == "dark" else "#FFFFFF"
-    border_col = "#1E2D44" if theme == "dark" else "#E5EAF1"
-    text_col = "#F1F5F9" if theme == "dark" else "#172033"
+def render_performance(theme: str = "creamy"):
+    """Renders Key Model Performance (Section C) and Model Evaluation & Error Analysis (Section G)."""
+    text_primary = "#292D32"
+    text_secondary = "#70736F"
+    primary_accent = "#647C70"
+    secondary_accent = "#A58B65"
+    border_col = "#E7E0D3"
+    card_bg = "#FFFDF8"
 
+    # =========================================================================
+    # SECTION C: KEY MODEL PERFORMANCE (COMPACT KPI CARDS)
+    # =========================================================================
     st.markdown(f"""
-    <div class="ph-card ph-card-accent">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+    <div style="margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
             <div>
-                <h2>Performance Intelligence</h2>
-                <p style="margin: 0; color: {sub_color}; font-size: 0.88rem;">
-                    Internal cross-validation and independent holdout results.
-                    <span style="font-weight: 600; color: {primary_color};">Internal offline validation metrics — not competition leaderboard scores.</span>
-                </p>
+                <h2>Key Model Performance</h2>
+                <div style="color: {text_secondary}; font-size: 0.85rem;">
+                    Verified cross-validation metrics across 18,000 training stars.
+                    <span style="font-weight: 600; color: {primary_accent};">(Internal offline validation results — not official competition leaderboard scores)</span>
+                </div>
             </div>
             <span class="badge-status badge-neutral">
-                Stratified 5-Fold CV + 20% Holdout
+                5-Fold Stratified + Detector-Channel Holdout
             </span>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # 4 Verified Internal Metric Cards
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
+    # 5 Compact, Equal-Height KPI Cards
+    k1, k2, k3, k4, k5 = st.columns(5)
+
+    with k1:
         st.markdown(f"""
-        <div class="metric-container" style="border-top: 3px solid {primary_color};">
-            <div class="metric-label">Champion OOF Macro F1</div>
-            <div class="metric-value" style="color: {primary_color};">{PROJECT_METRICS['champion_oof_f1']:.4f}</div>
-            <div class="metric-caption">18,000 Out-Of-Fold Blend</div>
+        <div class="metric-container" style="border-top: 3px solid {primary_accent};">
+            <div class="metric-label">Standard OOF F1</div>
+            <div class="metric-value" style="color: {primary_accent};">{PROJECT_METRICS['champion_oof_f1']:.4f}</div>
+            <div class="metric-caption">18,000 Out-Of-Fold Stars</div>
         </div>
         """, unsafe_allow_html=True)
 
-    with m2:
+    with k2:
         st.markdown(f"""
-        <div class="metric-container" style="border-top: 3px solid #0284C7;">
-            <div class="metric-label">5-Fold Mean F1</div>
-            <div class="metric-value">{PROJECT_METRICS['cv_mean_f1']:.4f}</div>
-            <div class="metric-caption">Cross-Fold Average Score</div>
+        <div class="metric-container" style="border-top: 3px solid {secondary_accent};">
+            <div class="metric-label">Detector OOF F1</div>
+            <div class="metric-value" style="color: {secondary_accent};">{PROJECT_METRICS['detector_oof_f1']:.4f}</div>
+            <div class="metric-caption">Hardware Holdout Transfer</div>
         </div>
         """, unsafe_allow_html=True)
 
-    with m3:
+    with k3:
         st.markdown(f"""
-        <div class="metric-container" style="border-top: 3px solid #6366F1;">
-            <div class="metric-label">5-Fold Stability (Std)</div>
-            <div class="metric-value">±{PROJECT_METRICS['cv_std_f1']:.4f}</div>
-            <div class="metric-caption">Ultra-low Variance Stability</div>
+        <div class="metric-container">
+            <div class="metric-label">Training Dataset</div>
+            <div class="metric-value">{PROJECT_METRICS['training_stars']:,}</div>
+            <div class="metric-caption">8 Balanced Classes</div>
         </div>
         """, unsafe_allow_html=True)
 
-    with m4:
+    with k4:
         st.markdown(f"""
-        <div class="metric-container" style="border-top: 3px solid #059669;">
-            <div class="metric-label">Detector-Channel OOF F1</div>
-            <div class="metric-value" style="color: #059669;">{PROJECT_METRICS['detector_oof_f1']:.4f}</div>
-            <div class="metric-caption">Unseen Detector Generalization</div>
+        <div class="metric-container">
+            <div class="metric-label">Test Predictions</div>
+            <div class="metric-value">{PROJECT_METRICS['test_stars']:,}</div>
+            <div class="metric-caption">Deterministic Outputs</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with k5:
+        st.markdown(f"""
+        <div class="metric-container">
+            <div class="metric-label">Target Taxonomy</div>
+            <div class="metric-value">{PROJECT_METRICS['classes_count']} Classes</div>
+            <div class="metric-caption">Macro F1 Metric</div>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
 
-    # Two column layout: Benchmark progression chart on Left, Per-Class F1 Breakdown on Right
+    # =========================================================================
+    # SECTION G: MODEL EVALUATION & ERROR ANALYSIS
+    # =========================================================================
+    st.markdown(f"""
+    <div style="margin-bottom: 12px;">
+        <h2>Model Evaluation & Error Analysis</h2>
+        <div style="color: {text_secondary}; font-size: 0.85rem;">
+            Empirical benchmark progression, class-wise F1 distribution, and astrophysical decision boundary analysis.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
     col_bench, col_perclass = st.columns([1.1, 1.0])
 
     with col_bench:
         df_bm = pd.DataFrame(MODEL_BENCHMARKS)
-        if theme == "dark":
-            bar_colors = ["#475569", "#D97706", "#0284C7", "#6366F1", "#38BDF8"]
-        else:
-            bar_colors = ["#94A3B8", "#D97706", "#0284C7", "#4F46E5", "#2457D6"]
-
-        # 2-line clean labels to avoid collision and make naming zone crisp & readable
-        formatted_labels = [
+        bar_colors = ["#A58B65", "#8A939E", "#5B7C99", "#738A58", "#647C70"]
+        labels = [
             "ExtraTrees<br>(Baseline)",
             "CatBoost",
             "HistGradient<br>Boosting",
             "LightGBM<br>(Single)",
-            "Champion<br>Dual Ensemble"
+            "Phase 5<br>Champion"
         ]
 
         fig_bench = go.Figure()
         fig_bench.add_trace(go.Bar(
-            x=formatted_labels,
-            y=df_bm["macro_f1"],
-            text=[f"<b>{val:.4f}</b>" for val in df_bm["macro_f1"]],
+            x=labels,
+            y=df_bm["macro_f1"].iloc[:5],
+            text=[f"<b>{val:.4f}</b>" for val in df_bm["macro_f1"].iloc[:5]],
             textposition="outside",
-            textfont={"family": "JetBrains Mono, monospace", "size": 11},
-            marker=dict(color=bar_colors, line=dict(color="rgba(0,0,0,0.08)", width=1)),
-            hovertemplate=(
-                "<b>%{customdata[2]}</b><br>" +
-                "Architecture: %{customdata[0]}<br>" +
-                "Validation Type: %{customdata[1]}<br>" +
-                "Macro F1 Score: <b>%{y:.4f}</b>" +
-                "<extra></extra>"
-            ),
-            customdata=df_bm[["category", "type", "model"]].values
+            textfont={"family": "JetBrains Mono, monospace", "size": 11, "color": text_primary},
+            marker=dict(color=bar_colors, line=dict(color="#E7E0D3", width=1)),
+            hovertemplate="<b>%{x}</b><br>Macro F1: <b>%{y:.4f}</b><extra></extra>"
         ))
-
-        # Baseline threshold line
-        fig_bench.add_shape(
-            type="line", x0=-0.5, x1=4.5, y0=0.5234, y1=0.5234,
-            line=dict(color="#94A3B8", width=1, dash="dot")
-        )
 
         bench_layout = get_plotly_layout(theme)
         bench_layout.update({
-            "title": "Model Architecture Progression (Validation Macro F1)",
+            "title": "Model Architecture Progression (Macro F1)",
             "yaxis": {
-                "range": [0.48, 0.63],
+                "range": [0.48, 0.68],
                 "title": "Macro F1 Score",
                 "gridcolor": bench_layout["yaxis"]["gridcolor"],
                 "tickformat": ".3f"
             },
-            "xaxis": {
-                "title": None,
-                "tickangle": 0,
-                "tickfont": {"size": 11, "family": "Inter, sans-serif"}
-            },
-            "height": 390,
-            "margin": {"l": 50, "r": 20, "t": 35, "b": 60}
+            "xaxis": {"title": None, "tickfont": {"size": 11, "family": "Inter, sans-serif"}},
+            "height": 380,
+            "margin": {"l": 50, "r": 20, "t": 35, "b": 50}
         })
         fig_bench.update_layout(bench_layout)
         st.plotly_chart(fig_bench, use_container_width=True, config={"displayModeBar": False})
 
     with col_perclass:
-        # Per-Class F1 Breakdown Chart (from verified documentation)
         df_cls = pd.DataFrame(CLASS_EVALUATION_METRICS).sort_values("f1", ascending=True)
 
         fig_cls = go.Figure()
@@ -148,46 +151,64 @@ def render_performance(theme: str = "light"):
             orientation='h',
             text=[f" <b>{val:.4f}</b>" for val in df_cls["f1"]],
             textposition='outside',
-            textfont={"family": "JetBrains Mono, monospace", "size": 11},
-            marker=dict(
-                color=["#059669" if f > 0.65 else "#0284C7" if f > 0.50 else "#D97706" for f in df_cls["f1"]],
-                line=dict(color="rgba(0,0,0,0.08)", width=1)
-            ),
-            hovertemplate=(
-                "<b>%{y}</b><br>" +
-                "OOF F1-Score: <b>%{x:.4f}</b><br>" +
-                "Precision: %{customdata[0]:.4f}<br>" +
-                "Recall: %{customdata[1]:.4f}<br>" +
-                "True Support: %{customdata[2]:,} stars" +
-                "<extra></extra>"
-            ),
-            customdata=df_cls[["precision", "recall", "support"]].values
+            textfont={"family": "JetBrains Mono, monospace", "size": 10, "color": text_primary},
+            marker=dict(color="#647C70", line=dict(color="#E7E0D3", width=1)),
+            hovertemplate="Class: <b>%{y}</b><br>Validation F1: <b>%{x:.4f}</b><extra></extra>"
         ))
 
         cls_layout = get_plotly_layout(theme)
         cls_layout.update({
-            "title": "Per-Class Out-Of-Fold F1-Score Breakdown",
+            "title": "Class-Wise Out-of-Fold F1 Score (18,000 Stars)",
             "xaxis": {
-                "range": [0, 0.88],
-                "title": "OOF F1-Score",
-                "gridcolor": cls_layout["xaxis"]["gridcolor"],
-                "tickformat": ".2f"
+                "range": [0, 0.95],
+                "title": "Macro F1",
+                "gridcolor": cls_layout["xaxis"]["gridcolor"]
             },
-            "yaxis": {
-                "title": None,
-                "tickfont": {"family": "JetBrains Mono, monospace", "size": 11}
-            },
+            "yaxis": {"title": None, "tickfont": {"family": "JetBrains Mono, monospace", "size": 10}},
             "height": 380,
-            "margin": {"l": 140, "r": 40, "t": 35, "b": 50}
+            "margin": {"l": 135, "r": 45, "t": 35, "b": 50}
         })
         fig_cls.update_layout(cls_layout)
         st.plotly_chart(fig_cls, use_container_width=True, config={"displayModeBar": False})
 
-    # Summary insight pill
-    st.markdown("""
-    <div class="ph-alert-info">
-        <strong>Ensemble Architecture & Optimization Milestone:</strong> The champion solution fuses <strong>5-Fold LightGBM (75% probability weight)</strong>
-        with <strong>5-Fold HistGradientBoosting (25% probability weight)</strong>, achieving <strong>+0.0722 (+13.8%) Macro F1 gain</strong> over baseline ExtraTrees
-        and outperforming single LightGBM by <strong>+0.0042</strong> on holdout validation.
-    </div>
-    """, unsafe_allow_html=True)
+    # Error Analysis Insights Cards (3 equal columns)
+    err1, err2, err3 = st.columns(3)
+
+    with err1:
+        st.markdown(f"""
+        <div class="ph-card" style="height: 100%; min-height: 175px;">
+            <div style="font-weight: 600; font-size: 0.90rem; color: {primary_accent}; margin-bottom: 6px;">
+                Planet vs. Quiet Star Boundary
+            </div>
+            <p style="margin: 0; font-size: 0.82rem; color: {text_secondary}; line-height: 1.55;">
+                Shallow exoplanetary transit depths (&Delta;F/F &asymp; 0.05%) closely approach the photon shot-noise floor of quiet stars. 
+                Transit-search BLS signal-to-noise ratio and in-dip variance clustering provide the primary statistical discriminator.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with err2:
+        st.markdown(f"""
+        <div class="ph-card" style="height: 100%; min-height: 175px;">
+            <div style="font-weight: 600; font-size: 0.90rem; color: {secondary_accent}; margin-bottom: 6px;">
+                Starspots vs. Quiet Star Modulation
+            </div>
+            <p style="margin: 0; font-size: 0.82rem; color: {text_secondary}; line-height: 1.55;">
+                Long-period, low-amplitude starspot modulation can be confused with stationary quiet stars. 
+                Autocorrelation lag analysis and Von Neumann variability ratios isolate coherent rotational trends from random white noise.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with err3:
+        st.markdown(f"""
+        <div class="ph-card" style="height: 100%; min-height: 175px;">
+            <div style="font-weight: 600; font-size: 0.90rem; color: #5B7C99; margin-bottom: 6px;">
+                Detector Domain Shift Mitigation
+            </div>
+            <p style="margin: 0; font-size: 0.82rem; color: {text_secondary}; line-height: 1.55;">
+                Different telescope CCD cameras induce channel-specific photometric drifts. 
+                Camera/epoch common-mode cotrending reduced Kolmogorov-Smirnov train-to-test drift by 60.3%, lifting detector OOF F1 from 0.42 to 0.6336.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)

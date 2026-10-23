@@ -1,219 +1,250 @@
 """
-Component E: Scientific Feature Exploration
-Explanatory Astrophysical Domain Features & Physics Lightcurve Simulation
+Component F: Feature Engineering & Astrophysical Inductive Biases
+Planet Hunters — Scientific Intelligence Platform
+88 domain-informed features across 4 pillars, ablation evidence, and interactive signature visualizer.
 """
 
 import streamlit as st
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
+from dashboard.data_loader import FEATURE_GROUP_ABLATIONS
 from dashboard.styles import get_plotly_layout, get_class_colors
 
-def render_features(theme: str = "light"):
-    """Renders scientific feature extraction concepts and illustrative physical profiles."""
-    sub_color = "#94A3B8" if theme == "dark" else "#667085"
-    card_bg = "#131D2E" if theme == "dark" else "#FFFFFF"
-    border_col = "#1E2D44" if theme == "dark" else "#E5EAF1"
-    text_col = "#F1F5F9" if theme == "dark" else "#172033"
-    class_colors = get_class_colors(theme)
+def render_features(theme: str = "creamy"):
+    """Renders Section F: Feature Engineering Pillars, Ablation Evidence, and Phenomenon Explorer."""
+    text_primary = "#292D32"
+    text_secondary = "#70736F"
+    primary_accent = "#647C70"
+    secondary_accent = "#A58B65"
+    border_col = "#E7E0D3"
+    card_bg = "#FFFDF8"
 
     st.markdown(f"""
-    <div class="ph-card ph-card-accent">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+    <div style="margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div>
-                <h2>Scientific Feature Exploration</h2>
-                <p style="margin: 0; color: {sub_color}; font-size: 0.88rem;">
-                    Physics-informed feature engineering: Translating raw photometric timeseries and centroids into diagnostic features.
-                </p>
+                <h2>Feature Engineering & Astrophysical Biases</h2>
+                <div style="color: {text_secondary}; font-size: 0.85rem;">
+                    Physics-informed feature extraction: Transforming 1,315 flux cadences into 88 diagnostic descriptors.
+                </div>
             </div>
-            <span class="badge-status badge-neutral">
-                Domain-Specific Inductive Biases
+            <span class="badge-status badge-telemetry">
+                88 Engineered Features • 4 Pillars
             </span>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Core Feature Pillar Cards
-    c1, c2, c3 = st.columns(3)
+    # 4 Feature Pillar Cards (Equal Height Grid)
+    p1, p2, p3, p4 = st.columns(4)
 
-    with c1:
+    with p1:
         st.markdown(f"""
-        <div class="metric-container" style="min-height: 180px; border-top: 3px solid #0284C7;">
-            <div style="color: #0284C7; font-weight: 700; text-transform: uppercase; font-size: 0.74rem;">Pillar 1 • Photometry</div>
-            <div style="font-family: 'Space Grotesk'; font-size: 1.05rem; font-weight: 700; color: {text_col}; margin: 4px 0 6px 0;">
-                Variability & Moments
+        <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid #5B7C99;">
+            <div style="color: #5B7C99; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
+                Pillar 1 • 32 Features
             </div>
-            <div style="font-size: 0.78rem; color: {sub_color}; line-height: 1.5;">
-                • <strong>MAD (Median Absolute Deviation)</strong>: Robust variance scale immune to cosmic ray spikes.<br>
-                • <strong>Robust Skew & Kurtosis</strong>: Asymmetry flags separating sudden dips from eruptive flares.<br>
-                • <strong>Von Neumann Ratio (η)</strong>: Successive variance ratio identifying smooth non-random trends.
+            <div style="font-weight: 600; font-size: 0.92rem; color: {text_primary}; margin-bottom: 6px;">
+                Cotrended Summary Stats
+            </div>
+            <div style="font-size: 0.78rem; color: {text_secondary}; line-height: 1.5;">
+                • <strong>MAD Variance</strong>: Scale estimator immune to single-epoch cosmic rays.<br>
+                • <strong>Percentile Spreads</strong>: P95-P5 and P99-P1 robust dynamic ranges.<br>
+                • <strong>Common-Mode Residuals</strong>: Normalized baseline deviations.
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-    with c2:
+    with p2:
         st.markdown(f"""
-        <div class="metric-container" style="min-height: 180px; border-top: 3px solid #6366F1;">
-            <div style="color: #6366F1; font-weight: 700; text-transform: uppercase; font-size: 0.74rem;">Pillar 2 • Morphology</div>
-            <div style="font-family: 'Space Grotesk'; font-size: 1.05rem; font-weight: 700; color: {text_col}; margin: 4px 0 6px 0;">
-                Transit & Periodic Search
+        <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid {primary_accent};">
+            <div style="color: {primary_accent}; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
+                Pillar 2 • 24 Features
             </div>
-            <div style="font-size: 0.78rem; color: {sub_color}; line-height: 1.5;">
-                • <strong>Box Least Squares (BLS) SNR</strong>: Statistical peak significance of periodic square dips.<br>
-                • <strong>Transit Depth & Duration</strong>: Differentiates gas giant transits from deep stellar eclipses.<br>
-                • <strong>Fourier Peak Power</strong>: Dominant harmonics isolating pulsating stars (Cepheids, RR Lyrae).
+            <div style="font-weight: 600; font-size: 0.92rem; color: {text_primary}; margin-bottom: 6px;">
+                Flux Distribution Moments
+            </div>
+            <div style="font-size: 0.78rem; color: {text_secondary}; line-height: 1.5;">
+                • <strong>Robust Skewness</strong>: Negative skew isolates dips; positive skew flags flares.<br>
+                • <strong>Kurtosis & Heavy Tails</strong>: Distinguishes impulses from Gaussian noise.<br>
+                • <strong>Binned Histogram Moments</strong>: Quantifies multimodal flux states.
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-    with c3:
+    with p3:
         st.markdown(f"""
-        <div class="metric-container" style="min-height: 180px; border-top: 3px solid #059669;">
-            <div style="color: #059669; font-weight: 700; text-transform: uppercase; font-size: 0.74rem;">Pillar 3 • Astrometry</div>
-            <div style="font-family: 'Space Grotesk'; font-size: 1.05rem; font-weight: 700; color: {text_col}; margin: 4px 0 6px 0;">
+        <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid {secondary_accent};">
+            <div style="color: {secondary_accent}; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
+                Pillar 3 • 16 Features
+            </div>
+            <div style="font-weight: 600; font-size: 0.92rem; color: {text_primary}; margin-bottom: 6px;">
+                Transit BLS & Morphology
+            </div>
+            <div style="font-size: 0.78rem; color: {text_secondary}; line-height: 1.5;">
+                • <strong>BLS Transit SNR</strong>: Significance of periodic square-well dips.<br>
+                • <strong>Transit Duration & Depth</strong>: Separates planetary dips from binary eclipses.<br>
+                • <strong>Fourier Harmonics</strong>: Peaks isolating pulsating stars (Cepheids, RR Lyrae).
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with p4:
+        st.markdown(f"""
+        <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid #738A58;">
+            <div style="color: #738A58; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
+                Pillar 4 • 16 Features
+            </div>
+            <div style="font-weight: 600; font-size: 0.92rem; color: {text_primary}; margin-bottom: 6px;">
                 Centroid Astrometry
             </div>
-            <div style="font-size: 0.78rem; color: {sub_color}; line-height: 1.5;">
-                • <strong>In-Dip vs Out-Of-Dip Centroid Offset</strong>: Vector drift of light center during flux minimum.<br>
-                • <strong>Background Binary Rejection</strong>: Genuine planets show Δcentroid ≈ 0; blended background binaries exhibit Δcentroid > 3σ.
+            <div style="font-size: 0.78rem; color: {text_secondary}; line-height: 1.5;">
+                • <strong>In-Dip vs. Out-of-Dip Drift</strong>: Center-of-light spatial shift during transit.<br>
+                • <strong>Background Binary Rejection</strong>: Genuine planets show &Delta;centroid &asymp; 0.<br>
+                • <strong>2D Centroid Variance</strong>: Flags optical spacecraft pointing jitter.
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
 
-    # Interactive Illustrative Physical Signature Visualizer
+    # Interactive Phenomenon Lightcurve Explorer
     st.markdown(f"""
-    <div style="background-color: {card_bg}; border: 1px solid {border_col}; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
-            <h4 style="margin: 0; color: {text_col}; font-size: 1.05rem;">Interactive Phenomenological Lightcurve Explorer</h4>
-            <span class="badge-status badge-neutral" style="font-size: 0.74rem;">
-                ILLUSTRATIVE SIMULATION — Used for Feature Validation
+    <div class="ph-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+            <div style="font-weight: 600; font-size: 0.95rem; color: {text_primary};">
+                Interactive Phenomenological Lightcurve Explorer
+            </div>
+            <span class="badge-status badge-neutral" style="font-size: 0.72rem;">
+                Scientific Simulation • Diagnostic Profiles
             </span>
         </div>
     """, unsafe_allow_html=True)
 
-    selected_phenomenon = st.selectbox(
-        "Select an astrophysical or instrumental phenomenon to inspect its lightcurve and extracted diagnostic features:",
+    phenomenon_choice = st.selectbox(
+        "Select an astronomical phenomenon to inspect its characteristic photometric profile and extracted features:",
         [
-            "Planetary Transit (U-Shaped Dip, Zero Centroid Shift)",
-            "Pulsating Star (Multi-Periodic Sinusoidal Stellar Oscillation)",
-            "Background Eclipsing Binary (V-Shaped Dip + Significant Centroid Offset)",
-            "Stellar Flare (Fast Rise, Exponential Decay Asymmetry)",
-            "Starspot Modulation (Quasi-Sinusoidal Rotational Variability)",
-            "Instrument Glitch (Instantaneous Sharp Anomaly)"
-        ],
-        index=0
+            "Planetary Transit (Periodic Flat-Bottomed U-Dip, Zero Centroid Shift)",
+            "Eclipsing Binary (Deep Alternating Primary & Secondary V-Eclipses)",
+            "Pulsating Star (Coherent Multi-Periodic Sinusoidal Stellar Oscillation)",
+            "Stellar Flare (Instantaneous Positive Spike with Exponential Cooling)",
+            "Background Binary (Transit-Like Dip with Significant In-Dip Centroid Offset)",
+            "Instrument Glitch (Single-Point Discontinuity / Cosmic Ray Hit)"
+        ]
     )
 
-    t = np.linspace(0, 30, 600)
+    # Generate synthetic illustrative lightcurves
     np.random.seed(42)
-    noise = np.random.normal(0, 0.0012, len(t))
+    time = np.linspace(0, 30, 600)
+    base_flux = np.ones_like(time) + np.random.normal(0, 0.003, size=len(time))
+    plot_color = primary_accent
 
-    if "Planetary Transit" in selected_phenomenon:
-        flux = np.ones_like(t)
-        for dip_center in [6, 16, 26]:
-            in_transit = np.abs(t - dip_center) < 0.35
-            flux[in_transit] -= 0.015
-        flux += noise
-        feature_focus = (
-            "• <strong>Transit Depth:</strong> 0.0150 (1.5%)<br>"
-            "• <strong>Box SNR:</strong> 18.42σ (High Significance Periodicity)<br>"
-            "• <strong>Centroid Shift:</strong> 0.0021 px (Negligible → On-Target Planet Candidate)"
-        )
-        accent_color = class_colors["planet"]
-        title_text = "Simulated Lightcurve: Planetary Transit (Exoplanet Signature)"
+    if "Planetary Transit" in phenomenon_choice:
+        # Periodic flat-bottomed U-dip
+        period = 7.5
+        phase = (time % period) / period
+        in_transit = np.abs(phase - 0.5) < 0.04
+        base_flux[in_transit] -= 0.025
+        plot_color = "#4E7A68"
+        desc = "Authentic exoplanet transit: Periodic, flat-bottomed U-dip with 2.5% depth. The centroid astrometry remains strictly centered (&Delta;centroid &asymp; 0) throughout the dip."
 
-    elif "Pulsating Star" in selected_phenomenon:
-        # Multi-periodic acoustic pulsation modes (Cepheid / Delta Scuti pattern)
-        flux = 1.0 + 0.035 * np.sin(2 * np.pi * t / 2.4) + 0.015 * np.sin(4 * np.pi * t / 2.4) + 0.008 * np.sin(2 * np.pi * t / 0.8) + noise
-        feature_focus = (
-            "• <strong>Dominant Period:</strong> 2.40 days (Fundamental Acoustic Mode)<br>"
-            "• <strong>Fourier Power Ratio (f2/f1):</strong> 0.428 (Harmonic Overtone)<br>"
-            "• <strong>Centroid In-Dip Offset:</strong> 0.0015 px (Intrinsic Stellar Pulsation)"
-        )
-        accent_color = class_colors["pulsating_star"]
-        title_text = "Simulated Lightcurve: Pulsating Star (Multi-Harmonic Stellar Oscillation)"
+    elif "Eclipsing Binary" in phenomenon_choice:
+        period = 6.0
+        phase = (time % period) / period
+        primary = np.abs(phase - 0.25) < 0.05
+        secondary = np.abs(phase - 0.75) < 0.04
+        base_flux[primary] -= 0.15
+        base_flux[secondary] -= 0.06
+        plot_color = "#5B7C99"
+        desc = "Eclipsing binary: Alternating deep primary (15%) and secondary (6%) V-shaped eclipses representing mutual occultation of two gravitationally bound stars."
 
-    elif "Background Eclipsing Binary" in selected_phenomenon:
-        flux = np.ones_like(t)
-        for dip_center in [7, 19]:
-            dist = np.abs(t - dip_center)
-            in_transit = dist < 0.6
-            flux[in_transit] -= 0.045 * (1 - dist[in_transit]/0.6)
-        flux += noise
-        feature_focus = (
-            "• <strong>Eclipse Depth:</strong> 0.0450 (Deep V-Shape)<br>"
-            "• <strong>In-Dip Centroid Offset:</strong> 0.065 px (Heavy Astrometric Shift)<br>"
-            "• <strong>Diagnostic Verdict:</strong> Background False Positive (Blended neighboring binary)"
-        )
-        accent_color = class_colors["background_binary"]
-        title_text = "Simulated Lightcurve: Background Eclipsing Binary (Centroid Shift False Positive)"
+    elif "Pulsating Star" in phenomenon_choice:
+        base_flux += 0.04 * np.sin(2 * np.pi * time / 1.8) + 0.015 * np.sin(2 * np.pi * time / 3.4)
+        plot_color = "#738A58"
+        desc = "Pulsating variable star: Coherent multi-periodic sinusoidal oscillation driving high Fourier harmonic peak power across characteristic pulsation modes."
 
-    elif "Stellar Flare" in selected_phenomenon:
-        flux = np.ones_like(t)
-        flare_time = 12.0
-        decay_mask = t >= flare_time
-        flux[decay_mask] += 0.055 * np.exp(-(t[decay_mask] - flare_time) / 1.1)
-        flux += noise
-        feature_focus = (
-            "• <strong>Peak Flare Amplitude:</strong> +0.0550 (+5.5% Flux Rise)<br>"
-            "• <strong>Decay Half-Life:</strong> 0.76 days (Magnetic Reconnection Decay)<br>"
-            "• <strong>Robust Skewness:</strong> +3.85 (Strong Positive Asymmetry)"
-        )
-        accent_color = class_colors["flare_star"]
-        title_text = "Simulated Lightcurve: Stellar Flare (Magnetic Eruption)"
+    elif "Stellar Flare" in phenomenon_choice:
+        flare_mask = (time > 12.0) & (time < 18.0)
+        base_flux[flare_mask] += 0.18 * np.exp(-(time[flare_mask] - 12.0) / 1.2)
+        plot_color = "#B85D43"
+        desc = "Stellar magnetic flare: Violent magnetic reconnection triggering a rapid, near-instantaneous flux eruption followed by exponential radiative cooling."
 
-    elif "Starspot" in selected_phenomenon:
-        flux = 1.0 + 0.02 * np.sin(2 * np.pi * t / 7.2) + 0.006 * np.sin(4 * np.pi * t / 7.2) + noise
-        feature_focus = (
-            "• <strong>Rotation Period:</strong> 7.20 days (Lomb-Scargle Peak)<br>"
-            "• <strong>Modulation Amplitude:</strong> 2.0% Peak-to-Peak<br>"
-            "• <strong>Von Neumann Ratio (η):</strong> 0.042 (Strong Smooth Autocorrelation)"
-        )
-        accent_color = class_colors["starspots"]
-        title_text = "Simulated Lightcurve: Starspot Modulation (Stellar Rotation)"
+    elif "Background Binary" in phenomenon_choice:
+        period = 9.0
+        phase = (time % period) / period
+        in_transit = np.abs(phase - 0.5) < 0.03
+        base_flux[in_transit] -= 0.035
+        plot_color = "#8B7A9E"
+        desc = "Background false-positive binary: The light curve exhibits a transit-like 3.5% dip, but centroid astrometry reveals a simultaneous >4&sigma; center-of-light spatial offset."
 
     else:
-        flux = np.ones_like(t) + noise
-        flux[240] -= 0.075
-        flux[241:245] += 0.035
-        feature_focus = (
-            "• <strong>Point Discontinuity Score:</strong> 12.8 (Single Cadence Delta)<br>"
-            "• <strong>Duration:</strong> 1 cadence (Non-astrophysical impulse)<br>"
-            "• <strong>Glitch Flag:</strong> Positive (Detector anomaly / cosmic ray hit)"
-        )
-        accent_color = class_colors["instrument_glitch"]
-        title_text = "Simulated Lightcurve: Instrument Glitch (Pixel Desync)"
+        # Instrument glitch
+        base_flux[280] -= 0.22
+        plot_color = "#8A939E"
+        desc = "Instrument glitch: Single-cadence unphysical drop caused by spacecraft thruster fire, cosmic ray hit, or readout anomaly. Flagged by extreme Von Neumann variability ratio."
 
-    # Plotly Figure
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=t,
-        y=flux,
+    fig_sim = go.Figure()
+    fig_sim.add_trace(go.Scatter(
+        x=time,
+        y=base_flux,
         mode='lines',
+        line=dict(color=plot_color, width=1.5),
         name='Relative Flux',
-        line=dict(color=accent_color, width=1.8),
-        hovertemplate="Time: %{x:.2f} d<br>Flux: %{y:.4f}<extra></extra>"
+        hovertemplate='Time: %{x:.2f} d<br>Relative Flux: %{y:.4f}<extra></extra>'
     ))
 
-    chart_layout = get_plotly_layout(theme)
-    chart_layout.update({
-        "title": title_text,
-        "xaxis": {"title": "Observation Time (Days)", "gridcolor": chart_layout["xaxis"]["gridcolor"]},
-        "yaxis": {"title": "Normalized Relative Flux", "gridcolor": chart_layout["yaxis"]["gridcolor"]},
-        "height": 330,
-        "margin": {"l": 55, "r": 20, "t": 35, "b": 40}
+    layout_sim = get_plotly_layout(theme)
+    layout_sim.update({
+        "title": f"Simulated Profile: {phenomenon_choice.split('(')[0].strip()}",
+        "xaxis": {"title": "Observational Epoch (Days)", "gridcolor": layout_sim["xaxis"]["gridcolor"]},
+        "yaxis": {"title": "Normalized Relative Flux", "gridcolor": layout_sim["yaxis"]["gridcolor"]},
+        "height": 300,
+        "margin": {"l": 55, "r": 20, "t": 35, "b": 35}
     })
-    fig.update_layout(chart_layout)
-    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+    fig_sim.update_layout(layout_sim)
+    st.plotly_chart(fig_sim, use_container_width=True, config={"displayModeBar": False})
 
-    # Extracted feature diagnostic panel
     st.markdown(f"""
-    <div style="background-color: {'#0F172A' if theme=='dark' else '#F8FAFC'}; border-left: 3px solid {accent_color}; border-radius: 6px; padding: 12px 16px; margin-top: 10px; font-size: 0.84rem; color: {text_col};">
-        <span style="font-weight: 700; color: {accent_color}; text-transform: uppercase; font-size: 0.74rem;">Extracted Pipeline Features for this Signature:</span>
-        <div style="margin-top: 6px; line-height: 1.6;">
-            {feature_focus}
-        </div>
+    <div style="font-size: 0.82rem; color: {text_secondary}; line-height: 1.5; padding-top: 4px;">
+        <strong>Astrophysical Interpretation:</strong> {desc}
     </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # Feature Group Ablation Table
+    st.markdown("<h3 style='margin-top: 20px; margin-bottom: 10px;'>Empirical Feature Group Ablation Evidence</h3>", unsafe_allow_html=True)
+    df_ablation = pd.DataFrame(FEATURE_GROUP_ABLATIONS)
+
+    st.markdown(f"""
+    <div class="ph-card" style="padding: 14px 18px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; color: {text_primary};">
+            <thead>
+                <tr style="border-bottom: 2px solid {border_col}; text-align: left;">
+                    <th style="padding: 8px 6px; color: {text_secondary};">Feature Pipeline Configuration</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">Count</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">OOF Macro F1</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">&Delta; F1</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">Empirical Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+    """, unsafe_allow_html=True)
+
+    table_rows = ""
+    for idx, row in df_ablation.iterrows():
+        is_champion = (idx == 0)
+        bg = "background-color: #EAEFE8;" if is_champion else ""
+        font_weight = "font-weight: 700;" if is_champion else ""
+        delta_color = primary_accent if is_champion else "#B85D43"
+        table_rows += f"""
+        <tr style="border-bottom: 1px solid {border_col}; {bg}">
+            <td style="padding: 8px 6px; {font_weight}">{row['group']}</td>
+            <td style="padding: 8px 6px; font-family: 'JetBrains Mono';">{row['features']}</td>
+            <td style="padding: 8px 6px; font-family: 'JetBrains Mono'; {font_weight}">{row['oof_f1']:.4f}</td>
+            <td style="padding: 8px 6px; font-family: 'JetBrains Mono'; color: {delta_color}; font-weight: 600;">{row['delta']}</td>
+            <td style="padding: 8px 6px; color: {text_secondary}; font-size: 0.78rem;">{row['note']}</td>
+        </tr>
+        """
+
+    st.markdown(f"{table_rows}</tbody></table></div>", unsafe_allow_html=True)

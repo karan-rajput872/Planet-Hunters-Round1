@@ -1,69 +1,44 @@
 """
 Planet Hunters — Scientific Intelligence Design System
-Enterprise SaaS & Scientific Research Platform Aesthetic
-Dual Theme Engine: Light (Default) and Dark with Complete Contrast and Typography Guardrails
+Warm Creamy & Ivory Scientific Theme
+Professional, minimal, elegant, and comfortable for extended viewing.
 """
 
-def get_theme_css(theme: str = "light") -> str:
-    """Generates complete, strict CSS rules for Light or Dark theme with bulletproof contrast."""
-    is_dark = (theme == "dark")
-
-    if is_dark:
-        # Dark Theme Palette (Restrained, deep astronomical navy)
-        bg_app = "#0B111E"
-        bg_card = "#131D2E"
-        bg_card_hover = "#19263C"
-        border_color = "#1E2D44"
-        border_subtle = "#182438"
-        text_primary = "#F1F5F9"
-        text_secondary = "#94A3B8"
-        text_muted = "#64748B"
-        primary_blue = "#3B82F6"
-        navy_accent = "#1E293B"
-        teal_accent = "#14B8A6"
-        badge_bg = "rgba(59, 130, 246, 0.14)"
-        badge_border = "rgba(59, 130, 246, 0.3)"
-        badge_text = "#60A5FA"
-        success_bg = "rgba(16, 185, 129, 0.14)"
-        success_border = "rgba(16, 185, 129, 0.3)"
-        success_text = "#34D399"
-        sidebar_bg = "#0D1524"
-        sidebar_text = "#F1F5F9"
-        sidebar_sub = "#94A3B8"
-        sidebar_active_bg = "rgba(59, 130, 246, 0.16)"
-        sidebar_active_border = "#3B82F6"
-        table_header_bg = "#182438"
-        code_bg = "#080D18"
-    else:
-        # Light Theme Palette (Default enterprise scientific SaaS)
-        bg_app = "#F5F7FA"
-        bg_card = "#FFFFFF"
-        bg_card_hover = "#F8FAFC"
-        border_color = "#E5EAF1"
-        border_subtle = "#EDF2F7"
-        text_primary = "#172033"
-        text_secondary = "#667085"
-        text_muted = "#98A2B3"
-        primary_blue = "#2457D6"
-        navy_accent = "#101B33"
-        teal_accent = "#0F9D91"
-        badge_bg = "#EEF4FF"
-        badge_border = "#C7D7FE"
-        badge_text = "#2457D6"
-        success_bg = "#ECFDF3"
-        success_border = "#ABEFC6"
-        success_text = "#067647"
-        sidebar_bg = "#FFFFFF"
-        sidebar_text = "#172033"
-        sidebar_sub = "#667085"
-        sidebar_active_bg = "#EEF4FF"
-        sidebar_active_border = "#2457D6"
-        table_header_bg = "#F8FAFC"
-        code_bg = "#F8FAFC"
+def get_theme_css(theme: str = "creamy") -> str:
+    """
+    Generates unified, high-contrast, professional CSS rules.
+    Default and primary visual identity: Warm Creamy / Ivory Scientific Aesthetic.
+    """
+    # Professional Creamy Palette Tokens
+    bg_app = "#F7F4EC"            # Warm Creamy Canvas
+    bg_card = "#FFFDF8"           # Luminous Warm Card Background
+    bg_card_hover = "#FBF7EE"     # Subtle Card Hover
+    bg_surface = "#F0EBDD"        # Secondary Surface / Sidebar
+    border_color = "#E7E0D3"      # Delicate Warm Border
+    border_subtle = "#EFE9DD"     # Soft Internal Line
+    text_primary = "#292D32"      # High-contrast Charcoal
+    text_secondary = "#70736F"    # Balanced Warm Grey
+    text_muted = "#949692"        # Subdued Grey
+    primary_accent = "#647C70"    # Sophisticated Sage Green
+    secondary_accent = "#A58B65"  # Warm Bronze / Sand
+    highlight_tint = "#EAEFE8"    # Subtle Sage Highlight
+    badge_bg = "#EAEFE8"          # Soft Sage Tint
+    badge_border = "#D4DFD2"      # Sage Border
+    badge_text = "#486254"        # Deep Sage Text
+    success_bg = "#EAEFE8"
+    success_border = "#C8D7C4"
+    success_text = "#3F6350"
+    sidebar_bg = "#F3EFE3"
+    sidebar_text = "#292D32"
+    sidebar_sub = "#70736F"
+    sidebar_active_bg = "#EAEFE8"
+    sidebar_active_border = "#647C70"
+    table_header_bg = "#F0EBDD"
+    code_bg = "#EFE9DC"
 
     return f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 /* ==============================================================================
    0. HIDE DEFAULT STREAMLIT UPPER HEADER, TOOLBAR & COLLAPSE BUTTON
@@ -94,7 +69,7 @@ footer,
 }}
 
 /* ==============================================================================
-   1. GLOBAL BOX-SIZING & ROOT CONTAINER
+   1. GLOBAL BOX-SIZING & ROOT CONTAINER (MINIMIZE TOP WHITESPACE)
    ============================================================================== */
 *, *::before, *::after {{
     box-sizing: border-box !important;
@@ -112,53 +87,59 @@ html, body, [class*="css"] {{
     overflow-x: hidden !important;
 }}
 
-/* Main container constraints */
+/* Main container constraints — Minimal top padding to remove excessive whitespace */
 .main .block-container {{
-    max-width: 1440px !important;
-    padding-top: 1.5rem !important;
+    max-width: 1400px !important;
+    padding-top: 0.75rem !important;
     padding-bottom: 3.5rem !important;
     padding-left: 2rem !important;
     padding-right: 2rem !important;
 }}
 
+/* Remove default empty element margins */
+.main .block-container > div:first-child {{
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}}
+
 /* ==============================================================================
-   2. TYPOGRAPHY HIERARCHY
+   2. UNIFIED TYPOGRAPHY HIERARCHY
    ============================================================================== */
 h1 {{
-    font-family: 'Space Grotesk', 'Inter', sans-serif !important;
-    font-size: 2.25rem !important; /* 36px */
-    font-weight: 800 !important;
-    line-height: 1.2 !important;
-    letter-spacing: -0.03em !important;
-    color: {text_primary} !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.5rem !important;
-}}
-
-h2 {{
-    font-family: 'Space Grotesk', 'Inter', sans-serif !important;
-    font-size: 1.55rem !important; /* 25px */
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.85rem !important; /* ~30px */
     font-weight: 700 !important;
     line-height: 1.25 !important;
-    letter-spacing: -0.02em !important;
-    color: {text_primary} !important;
-    margin-top: 0 !important;
-    margin-bottom: 0.4rem !important;
-}}
-
-h3 {{
-    font-family: 'Space Grotesk', 'Inter', sans-serif !important;
-    font-size: 1.2rem !important; /* 19px */
-    font-weight: 700 !important;
-    line-height: 1.3 !important;
+    letter-spacing: -0.025em !important;
     color: {text_primary} !important;
     margin-top: 0 !important;
     margin-bottom: 0.35rem !important;
 }}
 
+h2 {{
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.35rem !important; /* ~21px */
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.015em !important;
+    color: {text_primary} !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.3rem !important;
+}}
+
+h3 {{
+    font-family: 'Inter', sans-serif !important;
+    font-size: 1.05rem !important; /* ~17px */
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    color: {text_primary} !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.25rem !important;
+}}
+
 h4, h5, h6 {{
     font-family: 'Inter', sans-serif !important;
-    font-size: 1rem !important; /* 16px */
+    font-size: 0.95rem !important; /* ~15px */
     font-weight: 600 !important;
     color: {text_primary} !important;
     margin: 0 !important;
@@ -166,50 +147,34 @@ h4, h5, h6 {{
 
 p, label, input, button, select, textarea {{
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}}
-
-/* Strictly preserve Material Symbols and icon ligatures */
-[class*="material-symbols"],
-[class*="material-icons"],
-[data-testid*="Icon"],
-[data-testid="stIconMaterial"],
-i.material-icons,
-span.material-symbols-rounded {{
-    font-family: 'Material Symbols Rounded', 'Material Icons', sans-serif !important;
-    font-style: normal !important;
-    font-variant: normal !important;
-    text-transform: none !important;
-    letter-spacing: normal !important;
-    word-wrap: normal !important;
-    white-space: nowrap !important;
-    direction: ltr !important;
+    color: {text_secondary};
+    font-size: 0.92rem;
+    line-height: 1.6;
 }}
 
 /* ==============================================================================
-   3. SIDEBAR COMPLETE CONTRAST FIX & STYLING
+   3. SIDEBAR STYLING
    ============================================================================== */
 section[data-testid="stSidebar"] {{
     background-color: {sidebar_bg} !important;
     border-right: 1px solid {border_color} !important;
-    padding-top: 1rem !important;
-    width: 290px !important;
-    min-width: 260px !important;
+    padding-top: 1.2rem !important;
+    width: 285px !important;
+    min-width: 250px !important;
 }}
 
-/* Hide any collapse button inside sidebar */
 section[data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] {{
     display: none !important;
     visibility: hidden !important;
 }}
 
-/* Force text inside sidebar to use proper contrast without breaking icons */
 section[data-testid="stSidebar"] p,
 section[data-testid="stSidebar"] label,
 section[data-testid="stSidebar"] div[data-testid="stMarkdownContainer"] {{
     color: {sidebar_text} !important;
 }}
 
-/* Sidebar radio button items */
+/* Sidebar radio button navigation */
 section[data-testid="stSidebar"] div[data-testid="stRadio"] > div {{
     gap: 4px !important;
 }}
@@ -234,7 +199,7 @@ section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="
 }}
 
 section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="true"] span {{
-    color: {primary_blue} !important;
+    color: {primary_accent} !important;
     font-weight: 600 !important;
 }}
 
@@ -244,80 +209,75 @@ section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="
 .ph-card {{
     background-color: {bg_card} !important;
     border: 1px solid {border_color} !important;
-    border-radius: 10px !important;
-    padding: 20px 24px !important;
-    margin-bottom: 24px !important;
-    box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04), 0 1px 2px rgba(16, 24, 40, 0.02) !important;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+    border-radius: 8px !important;
+    padding: 18px 22px !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 1px 3px rgba(41, 45, 50, 0.03) !important;
+    transition: border-color 0.15s ease !important;
     min-width: 0 !important;
     width: 100% !important;
     overflow: hidden !important;
 }}
 
 .ph-card:hover {{
-    border-color: {primary_blue}44 !important;
+    border-color: {secondary_accent}88 !important;
 }}
 
 .ph-card-accent {{
-    border-left: 4px solid {primary_blue} !important;
+    border-left: 3px solid {primary_accent} !important;
 }}
 
 /* ==============================================================================
-   5. RESPONSIVE KPI CARD SYSTEM (NO TRUNCATION)
+   5. EQUAL-SIZED COMPACT KPI CARDS (BALANCED TYPOGRAPHY)
    ============================================================================== */
 .metric-container {{
     background-color: {bg_card} !important;
     border: 1px solid {border_color} !important;
     border-radius: 8px !important;
-    padding: 16px 18px !important;
+    padding: 14px 16px !important;
     text-align: left !important;
     min-width: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    min-height: 110px !important;
+    min-height: 105px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03) !important;
+    box-shadow: 0 1px 2px rgba(41, 45, 50, 0.02) !important;
     transition: all 0.15s ease !important;
 }}
 
 .metric-container:hover {{
-    border-color: {primary_blue}66 !important;
-    box-shadow: 0 2px 6px rgba(16, 24, 40, 0.06) !important;
+    border-color: {primary_accent}88 !important;
 }}
 
 .metric-label {{
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.76rem !important;
+    font-size: 0.72rem !important;
     font-weight: 600 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.04em !important;
+    letter-spacing: 0.05em !important;
     color: {text_secondary} !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 2px !important;
     line-height: 1.3 !important;
     word-break: normal !important;
-    overflow-wrap: break-word !important;
-    white-space: normal !important; /* FIX: Never truncate with ellipsis */
+    white-space: normal !important;
 }}
 
 .metric-value {{
-    font-family: 'JetBrains Mono', "SF Mono", Consolas, monospace !important;
-    font-size: 1.8rem !important; /* 29px */
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1.65rem !important; /* ~26px — Compact and professional */
     font-weight: 700 !important;
     color: {text_primary} !important;
     line-height: 1.2 !important;
-    margin: 4px 0 !important;
-    word-break: normal !important;
-    white-space: normal !important; /* FIX: Never truncate values like Macro F1 */
+    margin: 3px 0 !important;
 }}
 
 .metric-caption {{
-    font-size: 0.76rem !important;
+    font-size: 0.74rem !important;
     color: {text_secondary} !important;
     line-height: 1.35 !important;
-    margin-top: 2px !important;
-    word-break: normal !important;
+    margin-top: 1px !important;
 }}
 
 /* ==============================================================================
@@ -326,10 +286,10 @@ section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="
 .badge-status {{
     display: inline-flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    padding: 4px 10px !important;
-    border-radius: 6px !important;
-    font-size: 0.76rem !important;
+    gap: 5px !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    font-size: 0.73rem !important;
     font-weight: 600 !important;
     letter-spacing: 0.02em !important;
     font-family: 'Inter', sans-serif !important;
@@ -349,7 +309,7 @@ section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="
 }}
 
 .badge-neutral {{
-    background-color: {border_subtle} !important;
+    background-color: {bg_surface} !important;
     border: 1px solid {border_color} !important;
     color: {text_secondary} !important;
 }}
@@ -358,21 +318,21 @@ section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="
    7. BUTTONS, TABLES & INPUTS
    ============================================================================== */
 .stButton > button {{
-    background-color: {primary_blue} !important;
-    border: 1px solid {primary_blue} !important;
+    background-color: {primary_accent} !important;
+    border: 1px solid {primary_accent} !important;
     color: #FFFFFF !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.85rem !important;
+    font-size: 0.84rem !important;
     font-weight: 600 !important;
-    padding: 8px 18px !important;
+    padding: 7px 16px !important;
     border-radius: 6px !important;
     transition: background-color 0.15s ease !important;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05) !important;
+    box-shadow: 0 1px 2px rgba(41, 45, 50, 0.04) !important;
 }}
 
 .stButton > button:hover {{
-    background-color: #1E46B8 !important;
-    border-color: #1E46B8 !important;
+    background-color: #53695E !important;
+    border-color: #53695E !important;
 }}
 
 .stDownloadButton > button {{
@@ -380,21 +340,19 @@ section[data-testid="stSidebar"] div[data-testid="stRadio"] label[data-checked="
     border: 1px solid {border_color} !important;
     color: {text_primary} !important;
     font-family: 'Inter', sans-serif !important;
-    font-size: 0.85rem !important;
+    font-size: 0.84rem !important;
     font-weight: 600 !important;
-    padding: 8px 18px !important;
+    padding: 7px 16px !important;
     border-radius: 6px !important;
     transition: all 0.15s ease !important;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03) !important;
 }}
 
 .stDownloadButton > button:hover {{
-    border-color: {primary_blue} !important;
-    color: {primary_blue} !important;
-    background-color: {badge_bg} !important;
+    border-color: {primary_accent} !important;
+    color: {primary_accent} !important;
+    background-color: {highlight_tint} !important;
 }}
 
-/* Form elements & inputs */
 div[data-baseweb="input"] {{
     background-color: {bg_card} !important;
     border: 1px solid {border_color} !important;
@@ -409,62 +367,22 @@ div[data-baseweb="select"] > div {{
     color: {text_primary} !important;
 }}
 
-/* Clean Alerts */
-.ph-alert-info {{
-    background-color: {badge_bg} !important;
-    border-left: 3px solid {primary_blue} !important;
-    border-radius: 6px !important;
-    padding: 12px 16px !important;
-    margin: 12px 0 !important;
-    font-size: 0.86rem !important;
-    color: {text_primary} !important;
-    line-height: 1.5 !important;
-}}
-
-.ph-alert-success {{
-    background-color: {success_bg} !important;
-    border-left: 3px solid {success_text} !important;
-    border-radius: 6px !important;
-    padding: 12px 16px !important;
-    margin: 12px 0 !important;
-    font-size: 0.86rem !important;
-    color: {text_primary} !important;
-    line-height: 1.5 !important;
-}}
-
-/* Code & formula blocks */
 .ph-code-box {{
     background-color: {code_bg} !important;
     border: 1px solid {border_color} !important;
     border-radius: 6px !important;
-    padding: 14px 16px !important;
-    font-family: 'JetBrains Mono', "SF Mono", Consolas, monospace !important;
-    font-size: 0.82rem !important;
+    padding: 12px 14px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.8rem !important;
     color: {text_primary} !important;
-    line-height: 1.6 !important;
+    line-height: 1.55 !important;
     overflow-x: auto !important;
-    word-break: normal !important;
-    white-space: pre !important;
 }}
 
-/* Universal Table & Cell Contrast Protection */
-table, tr, td {{
-    color: {text_primary} !important;
-}}
-
-th {{
-    color: {text_secondary} !important;
-}}
-
-/* Streamlit Expander Contrast Protection in Light & Dark Themes */
 div[data-testid="stExpander"] {{
     background-color: {bg_card} !important;
     border: 1px solid {border_color} !important;
     border-radius: 8px !important;
-}}
-
-div[data-testid="stExpander"] details {{
-    background-color: transparent !important;
 }}
 
 div[data-testid="stExpander"] summary {{
@@ -473,73 +391,45 @@ div[data-testid="stExpander"] summary {{
     border-radius: 8px !important;
 }}
 
-div[data-testid="stExpander"] summary:hover {{
-    color: {primary_blue} !important;
-}}
-
 div[data-testid="stExpander"] summary span,
 div[data-testid="stExpander"] summary p {{
     color: {text_primary} !important;
     font-weight: 600 !important;
 }}
 
-div[data-testid="stExpander"] summary svg {{
-    fill: {text_primary} !important;
-    color: {text_primary} !important;
-}}
-
-div[data-testid="stExpander"] div[data-testid="stExpanderDetails"] {{
-    background-color: {bg_card} !important;
-    color: {text_primary} !important;
-}}
-
-/* Column shrink guard */
 [data-testid="column"] {{
     min-width: 0 !important;
 }}
 </style>
 """
 
-# Harmonious Scientific Palette for 8 Classes
-CLASS_PALETTE_LIGHT = {
-    "pulsating_star": "#7C3AED",      # Violet (27.2%)
-    "instrument_glitch": "#DC2626",   # Crimson (19.6%)
-    "quiet_star": "#059669",          # Emerald (13.2%)
-    "starspots": "#D97706",           # Amber (11.8%)
-    "eclipsing_binary": "#0284C7",    # Sky Blue (9.8%)
-    "planet": "#1D4ED8",              # Royal Blue (7.4%)
-    "flare_star": "#E11D48",          # Coral Rose (6.7%)
-    "background_binary": "#6366F1"    # Indigo (4.2%)
+# Harmonious, scientific, creamy theme color palette for 8 astrophysical classes
+CLASS_PALETTE = {
+    "planet": "#4E7A68",             # Sage Green (Exoplanet transit)
+    "eclipsing_binary": "#5B7C99",   # Slate Blue (Stellar binary eclipse)
+    "background_binary": "#8B7A9E",  # Muted Purple (Astrometric false positive)
+    "starspots": "#C49A45",          # Ochre Amber (Rotational modulation)
+    "pulsating_star": "#738A58",     # Olive Green (Harmonic pulsations)
+    "flare_star": "#B85D43",         # Terracotta Rose (Eruptive reconnection)
+    "instrument_glitch": "#8A939E",  # Muted Slate Steel (Hardware glitch)
+    "quiet_star": "#A58B65"          # Warm Bronze / Sand (Constant star)
 }
 
-CLASS_PALETTE_DARK = {
-    "pulsating_star": "#A78BFA",
-    "instrument_glitch": "#F87171",
-    "quiet_star": "#34D399",
-    "starspots": "#FBBF24",
-    "eclipsing_binary": "#60A5FA",
-    "planet": "#38BDF8",
-    "flare_star": "#FB7185",
-    "background_binary": "#818CF8"
-}
+def get_class_colors(theme: str = "creamy") -> dict:
+    """Returns color dictionary matching the creamy scientific theme."""
+    return CLASS_PALETTE
 
-def get_class_colors(theme: str = "light") -> dict:
-    """Returns color dictionary based on theme."""
-    return CLASS_PALETTE_DARK if theme == "dark" else CLASS_PALETTE_LIGHT
-
-def get_plotly_layout(theme: str = "light") -> dict:
-    """Returns clean, scientific Plotly layout tokens matching current theme."""
-    is_dark = (theme == "dark")
-
-    font_color = "#F1F5F9" if is_dark else "#172033"
-    grid_color = "#1E2D44" if is_dark else "#E5EAF1"
-    sub_color = "#94A3B8" if is_dark else "#667085"
+def get_plotly_layout(theme: str = "creamy") -> dict:
+    """Returns clean, scientific Plotly layout tokens matching creamy palette."""
+    font_color = "#292D32"
+    grid_color = "#E7E0D3"
+    sub_color = "#70736F"
 
     return {
         "paper_bgcolor": "rgba(0,0,0,0)",
         "plot_bgcolor": "rgba(0,0,0,0)",
         "font": {"family": "Inter, sans-serif", "color": font_color, "size": 12},
-        "title_font": {"family": "Space Grotesk, sans-serif", "size": 15, "color": font_color},
+        "title_font": {"family": "Inter, sans-serif", "size": 14, "color": font_color},
         "xaxis": {
             "gridcolor": grid_color,
             "zerolinecolor": grid_color,
@@ -554,5 +444,5 @@ def get_plotly_layout(theme: str = "light") -> dict:
             "showline": True,
             "linecolor": grid_color
         },
-        "margin": {"l": 50, "r": 30, "t": 40, "b": 40}
+        "margin": {"l": 50, "r": 30, "t": 35, "b": 35}
     }
