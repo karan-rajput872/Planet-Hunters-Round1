@@ -14,7 +14,11 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+import logging
 from src.submission_validation import validate_submission
+from src import config
+
+logger = logging.getLogger(__name__)
 
 SUBMISSION_FILE = PROJECT_ROOT / "submissions" / "submission_FINAL.csv"
 

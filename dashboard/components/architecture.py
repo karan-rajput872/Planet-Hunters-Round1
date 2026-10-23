@@ -6,6 +6,7 @@ Tri-architecture ensemble (50% LGB + 40% HGB + 10% CB), 4-stage flow, and archit
 
 import streamlit as st
 from pathlib import Path
+from dashboard.styles import render_html
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 ARCH_IMAGE_PORTFOLIO = PROJECT_ROOT / "assets" / "portfolio" / "architecture_diagram.png"
@@ -109,14 +110,13 @@ def render_architecture(theme: str = "creamy"):
     # Architecture Visual Asset
     arch_image = ARCH_IMAGE_PORTFOLIO if ARCH_IMAGE_PORTFOLIO.is_file() else ARCH_IMAGE_MAIN
     if arch_image.is_file():
-        st.markdown(f"""
-        <div class="ph-card" style="text-align: center; padding: 16px;">
-            <div style="font-weight: 600; font-size: 0.88rem; color: {text_primary}; margin-bottom: 10px; text-align: left;">
-                System Architecture Flowchart
-            </div>
-        """, unsafe_allow_html=True)
+        render_html(f"""
+        <div style="font-weight: 600; font-size: 0.88rem; color: {text_primary}; margin-bottom: 8px;">
+            System Architecture Flowchart
+        </div>
+        """)
         st.image(str(arch_image), use_container_width=True, caption="Figure 1: Planet Hunters End-to-End Machine Learning Architecture & Prediction Pipeline")
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("<div style='margin-bottom: 16px;'></div>", unsafe_allow_html=True)
 
     # Tri-Ensemble Models Breakdown (3 Equal Columns)
     m1, m2, m3 = st.columns(3)

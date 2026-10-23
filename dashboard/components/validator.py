@@ -8,6 +8,7 @@ Accurate status labels (PASS, BLOCKED, FAIL), creamy styling, and zero unhandled
 import streamlit as st
 import logging
 from dashboard.data_loader import run_submission_validation, SUBMISSION_FILE
+from dashboard.styles import render_html
 
 logger = logging.getLogger(__name__)
 
@@ -153,7 +154,7 @@ def render_validator(theme: str = "creamy"):
         </tr>
         """
 
-    st.markdown(f"""
+    render_html(f"""
     <div class="ph-card" style="margin-top: 14px; padding: 14px 18px;">
         <div style="font-weight: 600; font-size: 0.85rem; color: {primary_accent}; margin-bottom: 6px;">
             Stage A: Submission Artifact Integrity Checks (Self-Contained • 12 Rules)
@@ -171,7 +172,6 @@ def render_validator(theme: str = "creamy"):
                 {''.join(render_check_row(c) for c in checklist_stage_a)}
             </tbody>
         </table>
-
         <div style="font-weight: 600; font-size: 0.85rem; color: {secondary_accent}; margin-bottom: 6px;">
             Stage B: External Target Dataset Cross-Matching Checks (Requires test_stars.csv • 2 Rules)
         </div>
@@ -189,7 +189,7 @@ def render_validator(theme: str = "creamy"):
             </tbody>
         </table>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # Show warning notices if Stage B checks are blocked
     if res.get("warnings"):

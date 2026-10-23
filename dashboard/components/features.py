@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from dashboard.data_loader import FEATURE_GROUP_ABLATIONS
-from dashboard.styles import get_plotly_layout, get_class_colors
+from dashboard.styles import get_plotly_layout, get_class_colors, render_html
 
 def render_features(theme: str = "creamy"):
     """Renders Section F: Feature Engineering Pillars, Ablation Evidence, and Phenomenon Explorer."""
@@ -216,21 +216,6 @@ def render_features(theme: str = "creamy"):
     st.markdown("<h3 style='margin-top: 20px; margin-bottom: 10px;'>Empirical Feature Group Ablation Evidence</h3>", unsafe_allow_html=True)
     df_ablation = pd.DataFrame(FEATURE_GROUP_ABLATIONS)
 
-    st.markdown(f"""
-    <div class="ph-card" style="padding: 14px 18px;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; color: {text_primary};">
-            <thead>
-                <tr style="border-bottom: 2px solid {border_col}; text-align: left;">
-                    <th style="padding: 8px 6px; color: {text_secondary};">Feature Pipeline Configuration</th>
-                    <th style="padding: 8px 6px; color: {text_secondary};">Count</th>
-                    <th style="padding: 8px 6px; color: {text_secondary};">OOF Macro F1</th>
-                    <th style="padding: 8px 6px; color: {text_secondary};">&Delta; F1</th>
-                    <th style="padding: 8px 6px; color: {text_secondary};">Empirical Impact</th>
-                </tr>
-            </thead>
-            <tbody>
-    """, unsafe_allow_html=True)
-
     table_rows = ""
     for idx, row in df_ablation.iterrows():
         is_champion = (idx == 0)
@@ -247,4 +232,22 @@ def render_features(theme: str = "creamy"):
         </tr>
         """
 
-    st.markdown(f"{table_rows}</tbody></table></div>", unsafe_allow_html=True)
+    full_table_html = f"""
+    <div class="ph-card" style="padding: 14px 18px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; color: {text_primary};">
+            <thead>
+                <tr style="border-bottom: 2px solid {border_col}; text-align: left;">
+                    <th style="padding: 8px 6px; color: {text_secondary};">Feature Pipeline Configuration</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">Count</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">OOF Macro F1</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">&Delta; F1</th>
+                    <th style="padding: 8px 6px; color: {text_secondary};">Empirical Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                {table_rows}
+            </tbody>
+        </table>
+    </div>
+    """
+    render_html(full_table_html)

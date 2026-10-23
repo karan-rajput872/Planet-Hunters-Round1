@@ -1,8 +1,18 @@
-"""
-Planet Hunters — Scientific Intelligence Design System
-Warm Creamy & Ivory Scientific Theme
-Professional, minimal, elegant, and comfortable for extended viewing.
-"""
+import textwrap
+import streamlit as st
+
+def render_html(html_content: str):
+    """
+    Renders application-controlled HTML safely and cleanly.
+    Strips accidental multiline indentation using textwrap.dedent to prevent CommonMark
+    from treating indented HTML as code blocks (<pre><code>).
+    Uses st.html() when available, falling back to st.markdown(..., unsafe_allow_html=True).
+    """
+    cleaned = textwrap.dedent(html_content).strip()
+    if hasattr(st, "html"):
+        st.html(cleaned)
+    else:
+        st.markdown(cleaned, unsafe_allow_html=True)
 
 def get_theme_css(theme: str = "creamy") -> str:
     """
