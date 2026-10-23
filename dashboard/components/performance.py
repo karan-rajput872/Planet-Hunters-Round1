@@ -66,9 +66,9 @@ def render_performance(theme: str = "light"):
     with m4:
         st.markdown(f"""
         <div class="metric-container" style="border-top: 3px solid #059669;">
-            <div class="metric-label">Champion Holdout F1</div>
-            <div class="metric-value" style="color: #059669;">{PROJECT_METRICS['champion_holdout_f1']:.4f}</div>
-            <div class="metric-caption">3,600 Unseen Holdout Stars</div>
+            <div class="metric-label">Detector-Channel OOF F1</div>
+            <div class="metric-value" style="color: #059669;">{PROJECT_METRICS['detector_oof_f1']:.4f}</div>
+            <div class="metric-caption">Unseen Detector Generalization</div>
         </div>
         """, unsafe_allow_html=True)
 

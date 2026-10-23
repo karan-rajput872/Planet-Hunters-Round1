@@ -10,15 +10,15 @@
 ## 1. Executive Summary & Project Card
 
 ### Short Summary (One-Paragraph Elevator Pitch)
-> An end-to-end machine learning system that classifies space telescope stellar light curves into eight astrophysical and instrumental categories (exoplanets, eclipsing binaries, background blends, starspots, pulsators, flares, glitches, and quiet stars). Operating on 1,315-cadence time-series, the pipeline extracts 85 domain-informed features—including 1-day 2D median detrending, centroid displacement vetting, and flare rise-decay asymmetry—and trains a 5-fold dual-architecture ensemble combining leaf-wise LightGBM and depth-wise HistGradientBoosting. The champion model achieves a verified **0.5915 Out-of-Fold Macro F1** across 18,000 stars (holdout: **0.5956**) with 100% bitwise reproducible inference.
+> An end-to-end machine learning system that classifies space telescope stellar light curves into eight astrophysical and instrumental categories (exoplanets, eclipsing binaries, background blends, starspots, pulsators, flares, glitches, and quiet stars). Operating on 1,315-cadence time-series, the pipeline removes common camera/CCD detector noise via astronomical cotrending, extracts 88 domain-informed features—including transit dip SNR, odd-even depth ratio, centroid displacement vetting, and flare rise-decay asymmetry—and trains a 5-fold tri-architecture ensemble combining leaf-wise LightGBM, depth-wise HistGradientBoosting, and CatBoost. The promoted champion model achieves a verified **0.6455 Out-of-Fold Macro F1** (and **0.6336 Out-of-Detector Generalization Macro F1**) with 100% bitwise reproducible inference.
 
 ### Quick Project Card Details
 - **Project Title:** Planet Hunters — Autonomous Time-Series Classification of Space Telescope Starlight
 - **Subtitle:** Multiclass Astronomical Lightcurve Classification & Exoplanet Transit Vetting
 - **Domain:** Scientific Machine Learning (SciML), Time-Series Feature Engineering, Ensembling
-- **Key Metric:** **0.5915 Macro F1** (5-Fold Stratified Cross-Validation on 18,000 stars)
-- **Tech Stack:** Python 3.11, NumPy, Pandas, SciPy, Scikit-learn, LightGBM, Matplotlib, Seaborn, PyArrow
-- **Architecture:** 5-Fold Dual-Architecture Gradient Boosting (75% LightGBM + 25% HistGradientBoosting)
+- **Key Metric:** **0.6455 Macro F1** (5-Fold Stratified OOF) & **0.6336 Macro F1** (Stratified Detector-Channel OOF)
+- **Tech Stack:** Python 3.11, NumPy, Pandas, SciPy, Scikit-learn, LightGBM, CatBoost, Matplotlib, Seaborn, PyArrow
+- **Architecture:** 5-Fold Tri-Architecture Ensemble (50% LightGBM + 40% HistGradientBoosting + 10% CatBoost)
 
 ---
 

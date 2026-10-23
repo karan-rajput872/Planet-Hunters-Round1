@@ -3,8 +3,13 @@
 
 **Author:** Antigravity Senior ML Auditor & Competition Grandmaster
 **Date:** 2026-10-22
-**Status:** FINAL COMPETITION READY & AUDITED
-**Current Champion:** `submissions/submission_v3.csv`
+**Status:** ARCHIVED PHASE 4 MILESTONE (SUPERSEDED BY PHASE 5)
+**Phase 4 Champion Artifact:** `submissions/submission_FINAL_PHASE4_BACKUP.csv` (SHA-256: `f53a08c47155bc907f855b0626cb38134aae298a58903b18f3d56818f0c053c1`)
+**Active Official Final Submission:** `submissions/submission_FINAL.csv` (Phase 5 Tri-Ensemble, SHA-256: `6a378eae06765a28a39d41a322f47ff25512a43a47827ff4576940282b74330e`)
+**Successor Report:** See [reports/PHASE5_FINAL_RELEASE_REPORT.md](file:///c:/Users/KIIT/OneDrive/Documents/Planet-Hunters-Round1/reports/PHASE5_FINAL_RELEASE_REPORT.md)
+
+> [!NOTE]
+> This document records the Phase 4 baseline completion (Public LB: 0.4214, Stratified OOF: 0.5915). For the active Phase 5 production solution (88 cotrended features, Detector-Channel OOF: 0.6336, Stratified OOF: 0.6455), refer to [PHASE5_FINAL_RELEASE_REPORT.md](file:///c:/Users/KIIT/OneDrive/Documents/Planet-Hunters-Round1/reports/PHASE5_FINAL_RELEASE_REPORT.md).
 
 ---
 

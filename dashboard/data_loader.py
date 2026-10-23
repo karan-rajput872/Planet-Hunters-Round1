@@ -19,36 +19,41 @@ SUBMISSION_FILE = PROJECT_ROOT / "submissions" / "submission_FINAL.csv"
 
 # Actual Project Reported Metrics (Strictly non-fabricated, from docs/MODEL_EVALUATION.md)
 PROJECT_METRICS = {
-    "champion_oof_f1": 0.5915,
-    "cv_mean_f1": 0.5914,
+    "champion_oof_f1": 0.6455,
+    "detector_oof_f1": 0.6336,
+    "cv_mean_f1": 0.6455,
     "cv_std_f1": 0.0020,
-    "champion_holdout_f1": 0.5956,
+    "phase4_oof_f1": 0.5915,
+    "phase4_public_lb": 0.4214,
     "training_stars": 18000,
     "test_stars": 7000,
     "flux_cadences": 1315,
     "classes_count": 8,
+    "features_count": 88,
     "metric_name": "Macro F1"
 }
 
 # Model Benchmarks for Comparison Visualization (from reports/model_comparison.csv & docs)
 MODEL_BENCHMARKS = [
     {"model": "ExtraTrees (Baseline)", "macro_f1": 0.5234, "category": "Random Split Forest", "type": "Holdout Baseline"},
-    {"model": "CatBoost", "macro_f1": 0.5512, "category": "Symmetric Oblivious Trees", "type": "Holdout Benchmark"},
+    {"model": "CatBoost (Baseline)", "macro_f1": 0.5512, "category": "Symmetric Oblivious Trees", "type": "Holdout Benchmark"},
     {"model": "HistGradientBoosting", "macro_f1": 0.5709, "category": "Depth-Wise Histogram GBDT", "type": "Holdout Benchmark"},
     {"model": "LightGBM (Single)", "macro_f1": 0.5914, "category": "Tuned Leaf-Wise GBDT", "type": "Holdout Benchmark"},
-    {"model": "Champion Dual Ensemble", "macro_f1": 0.5956, "category": "5-Fold LGBM (75%) + HistGB (25%)", "type": "Holdout Champion"}
+    {"model": "Phase 4 Dual Ensemble", "macro_f1": 0.5915, "category": "5-Fold LGBM (75%) + HistGB (25%)", "type": "Phase 4 Baseline"},
+    {"model": "Phase 5 Dual Ensemble", "macro_f1": 0.6438, "category": "5-Fold LGBM (75%) + HistGB (25%) [Cotrended]", "type": "Phase 5 Candidate"},
+    {"model": "Phase 5 Tri-Ensemble (Promoted Champion)", "macro_f1": 0.6455, "category": "5-Fold LGB (50%) + HGB (40%) + CB (10%) [Cotrended]", "type": "Promoted Champion"}
 ]
 
-# Verified Per-Class Validation Breakdown (from docs/MODEL_EVALUATION.md, Section 4)
+# Verified Per-Class Validation Breakdown (from Phase 5 Classification Report, 18,000 stars)
 CLASS_EVALUATION_METRICS = [
-    {"class": "instrument_glitch", "display": "Instrument Glitch", "precision": 0.8159, "recall": 0.6851, "f1": 0.7448, "support": 1721},
-    {"class": "eclipsing_binary", "display": "Eclipsing Binary", "precision": 0.8463, "recall": 0.6422, "f1": 0.7303, "support": 2247},
-    {"class": "pulsating_star", "display": "Pulsating Star", "precision": 0.7136, "recall": 0.6214, "f1": 0.6643, "support": 1973},
-    {"class": "quiet_star", "display": "Quiet Star", "precision": 0.4785, "recall": 0.7762, "f1": 0.5920, "support": 3624},
-    {"class": "background_binary", "display": "Background Binary", "precision": 0.6396, "recall": 0.4813, "f1": 0.5493, "support": 1604},
-    {"class": "flare_star", "display": "Flare Star", "precision": 0.6478, "recall": 0.4446, "f1": 0.5273, "support": 1804},
-    {"class": "planet", "display": "Exoplanet Transit", "precision": 0.5068, "recall": 0.4345, "f1": 0.4679, "support": 2145},
-    {"class": "starspots", "display": "Starspot Modulation", "precision": 0.4493, "recall": 0.4629, "f1": 0.4560, "support": 2882},
+    {"class": "instrument_glitch", "display": "Instrument Glitch", "precision": 0.8505, "recall": 0.7902, "f1": 0.8193, "support": 1721},
+    {"class": "eclipsing_binary", "display": "Eclipsing Binary", "precision": 0.8487, "recall": 0.6667, "f1": 0.7468, "support": 2247},
+    {"class": "pulsating_star", "display": "Pulsating Star", "precision": 0.8313, "recall": 0.6670, "f1": 0.7402, "support": 1973},
+    {"class": "flare_star", "display": "Flare Star", "precision": 0.7980, "recall": 0.5715, "f1": 0.6660, "support": 1804},
+    {"class": "quiet_star", "display": "Quiet Star", "precision": 0.4934, "recall": 0.8331, "f1": 0.6197, "support": 3624},
+    {"class": "background_binary", "display": "Background Binary", "precision": 0.6980, "recall": 0.4956, "f1": 0.5797, "support": 1604},
+    {"class": "starspots", "display": "Starspot Modulation", "precision": 0.5316, "recall": 0.5344, "f1": 0.5330, "support": 2882},
+    {"class": "planet", "display": "Exoplanet Transit", "precision": 0.5361, "recall": 0.4014, "f1": 0.4591, "support": 2145},
 ]
 
 # Verified Feature Group Ablation Evidence (from docs/MODEL_EVALUATION.md, Section 5)

@@ -1,0 +1,354 @@
+{
+  "verified_baselines": {
+    "p4_strat_f1": 0.5915,
+    "p4_det_f1": 0.5161,
+    "p5_strat_f1": 0.6454551292971912,
+    "p5_det_f1": 0.6336189529545279,
+    "p6_strat_f1": 0.6460964298695118,
+    "p6_det_f1": 0.6338094030632053,
+    "p7_peak_strat_f1": 0.6460964298695118,
+    "p7_peak_det_f1": 0.6338094030632053
+  },
+  "best_candidate": {
+    "name": "Candidate (45/45/10)",
+    "weights": [
+      0.45,
+      0.45,
+      0.1
+    ],
+    "strat_f1": 0.6460964298695118,
+    "det_f1": 0.6338094030632053,
+    "det_fold_mean": 0.6339521402355468,
+    "det_fold_std": 0.013885708086370088,
+    "det_folds": [
+      0.6560668784392847,
+      0.6376535281206959,
+      0.6366492921512887,
+      0.6245701492955036,
+      0.6148208531709611
+    ],
+    "per_class": {
+      "background_binary": 0.5660649819494585,
+      "eclipsing_binary": 0.7366060304011961,
+      "flare_star": 0.6588996763754046,
+      "instrument_glitch": 0.7741209563994375,
+      "planet": 0.45954356846473027,
+      "pulsating_star": 0.7348548887010425,
+      "quiet_star": 0.6059834500318269,
+      "starspots": 0.5344016721825466
+    }
+  },
+  "disagreement_metrics": {
+    "lh": 11.366666666666667,
+    "lc": 15.32777777777778,
+    "hc": 15.877777777777776,
+    "corr_lh": 0.8418744708191218,
+    "corr_lc": 0.7806263502076936,
+    "corr_hc": 0.7749923265267994
+  },
+  "error_analysis": {
+    "total_errors": 6580,
+    "class_loss": [
+      {
+        "class": "background_binary",
+        "f1": 0.5796573095151294,
+        "precision": 0.6979806848112379,
+        "recall": 0.4956359102244389,
+        "loss_contrib": 0.052542836310608826
+      },
+      {
+        "class": "eclipsing_binary",
+        "f1": 0.7467597208374875,
+        "precision": 0.8487252124645892,
+        "recall": 0.6666666666666666,
+        "loss_contrib": 0.03165503489531406
+      },
+      {
+        "class": "flare_star",
+        "f1": 0.6660206718346253,
+        "precision": 0.7979876160990712,
+        "recall": 0.5715077605321508,
+        "loss_contrib": 0.041747416020671835
+      },
+      {
+        "class": "instrument_glitch",
+        "f1": 0.8192771084337349,
+        "precision": 0.8505315822388994,
+        "recall": 0.7902382335851249,
+        "loss_contrib": 0.022590361445783136
+      },
+      {
+        "class": "planet",
+        "f1": 0.4590775793121834,
+        "precision": 0.5361145703611457,
+        "recall": 0.4013986013986014,
+        "loss_contrib": 0.06761530258597707
+      },
+      {
+        "class": "pulsating_star",
+        "f1": 0.7401574803149606,
+        "precision": 0.8313329121920404,
+        "recall": 0.6670045615813482,
+        "loss_contrib": 0.03248031496062992
+      },
+      {
+        "class": "quiet_star",
+        "f1": 0.6197269834753156,
+        "precision": 0.49338127144958327,
+        "recall": 0.8330573951434879,
+        "loss_contrib": 0.047534127065585546
+      },
+      {
+        "class": "starspots",
+        "f1": 0.5329641806540925,
+        "precision": 0.5315843976527442,
+        "recall": 0.5343511450381679,
+        "loss_contrib": 0.05837947741823844
+      }
+    ],
+    "top_confusions": [
+      {
+        "true_class": "starspots",
+        "pred_class": "quiet_star",
+        "count": 956,
+        "pair": "starspots -> quiet_star"
+      },
+      {
+        "true_class": "planet",
+        "pred_class": "quiet_star",
+        "count": 699,
+        "pair": "planet -> quiet_star"
+      },
+      {
+        "true_class": "pulsating_star",
+        "pred_class": "quiet_star",
+        "count": 468,
+        "pair": "pulsating_star -> quiet_star"
+      },
+      {
+        "true_class": "flare_star",
+        "pred_class": "quiet_star",
+        "count": 401,
+        "pair": "flare_star -> quiet_star"
+      },
+      {
+        "true_class": "planet",
+        "pred_class": "starspots",
+        "count": 368,
+        "pair": "planet -> starspots"
+      },
+      {
+        "true_class": "flare_star",
+        "pred_class": "starspots",
+        "count": 275,
+        "pair": "flare_star -> starspots"
+      },
+      {
+        "true_class": "background_binary",
+        "pred_class": "quiet_star",
+        "count": 240,
+        "pair": "background_binary -> quiet_star"
+      },
+      {
+        "true_class": "quiet_star",
+        "pred_class": "starspots",
+        "count": 238,
+        "pair": "quiet_star -> starspots"
+      },
+      {
+        "true_class": "eclipsing_binary",
+        "pred_class": "background_binary",
+        "count": 216,
+        "pair": "eclipsing_binary -> background_binary"
+      },
+      {
+        "true_class": "background_binary",
+        "pred_class": "eclipsing_binary",
+        "count": 206,
+        "pair": "background_binary -> eclipsing_binary"
+      }
+    ]
+  },
+  "targeted_evals": [
+    {
+      "name": "Phase 5 Approved (50/40/10)",
+      "weights": [
+        0.5,
+        0.4,
+        0.1
+      ],
+      "strat_f1": 0.6454551292971912,
+      "det_f1": 0.6336189529545279,
+      "det_fold_mean": 0.6338427798220001,
+      "det_fold_std": 0.013712422795198013,
+      "det_folds": [
+        0.6556434653507419,
+        0.6360341806253129,
+        0.6379055659290679,
+        0.6248171634126676,
+        0.6148135237922105
+      ],
+      "per_class": {
+        "background_binary": 0.5659559089266354,
+        "eclipsing_binary": 0.7358725416977844,
+        "flare_star": 0.6588921282798834,
+        "instrument_glitch": 0.7751763046544429,
+        "planet": 0.4571132417724799,
+        "pulsating_star": 0.7375246687341416,
+        "quiet_star": 0.6046659597030752,
+        "starspots": 0.5337508698677801
+      }
+    },
+    {
+      "name": "Candidate (45/45/10)",
+      "weights": [
+        0.45,
+        0.45,
+        0.1
+      ],
+      "strat_f1": 0.6460964298695118,
+      "det_f1": 0.6338094030632053,
+      "det_fold_mean": 0.6339521402355468,
+      "det_fold_std": 0.013885708086370088,
+      "det_folds": [
+        0.6560668784392847,
+        0.6376535281206959,
+        0.6366492921512887,
+        0.6245701492955036,
+        0.6148208531709611
+      ],
+      "per_class": {
+        "background_binary": 0.5660649819494585,
+        "eclipsing_binary": 0.7366060304011961,
+        "flare_star": 0.6588996763754046,
+        "instrument_glitch": 0.7741209563994375,
+        "planet": 0.45954356846473027,
+        "pulsating_star": 0.7348548887010425,
+        "quiet_star": 0.6059834500318269,
+        "starspots": 0.5344016721825466
+      }
+    },
+    {
+      "name": "Candidate (50/45/5)",
+      "weights": [
+        0.5,
+        0.45,
+        0.05
+      ],
+      "strat_f1": 0.645600687756483,
+      "det_f1": 0.6335093800542908,
+      "det_fold_mean": 0.6336895135907484,
+      "det_fold_std": 0.013498426412338437,
+      "det_folds": [
+        0.6550632833080157,
+        0.6371809207373913,
+        0.6363272474417052,
+        0.6252694245447179,
+        0.614606691921912
+      ],
+      "per_class": {
+        "background_binary": 0.5659559089266354,
+        "eclipsing_binary": 0.7353746577047547,
+        "flare_star": 0.6588921282798834,
+        "instrument_glitch": 0.7741753594586975,
+        "planet": 0.4591520165460186,
+        "pulsating_star": 0.7356257046223225,
+        "quiet_star": 0.6042905692438403,
+        "starspots": 0.534608695652174
+      }
+    },
+    {
+      "name": "Candidate (40/50/10)",
+      "weights": [
+        0.4,
+        0.5,
+        0.1
+      ],
+      "strat_f1": 0.6457379791698017,
+      "det_f1": 0.6336269228321075,
+      "det_fold_mean": 0.6337017807430796,
+      "det_fold_std": 0.01424748341245276,
+      "det_folds": [
+        0.6571080329293627,
+        0.638126423414626,
+        0.6342807827106864,
+        0.6241673489863315,
+        0.6148263156743918
+      ],
+      "per_class": {
+        "background_binary": 0.5645102999638598,
+        "eclipsing_binary": 0.7360557768924303,
+        "flare_star": 0.659540006478782,
+        "instrument_glitch": 0.7737226277372263,
+        "planet": 0.45803108808290155,
+        "pulsating_star": 0.7360406091370558,
+        "quiet_star": 0.6056681880904362,
+        "starspots": 0.5354467862741683
+      }
+    },
+    {
+      "name": "Candidate (48/44/8)",
+      "weights": [
+        0.48,
+        0.44,
+        0.08
+      ],
+      "strat_f1": 0.6453641375970789,
+      "det_f1": 0.6336334543474633,
+      "det_fold_mean": 0.6337910369326982,
+      "det_fold_std": 0.013948909468568929,
+      "det_folds": [
+        0.6555306847773041,
+        0.6373226299437924,
+        0.6375100169629843,
+        0.6244790082579863,
+        0.6141128447214241
+      ],
+      "per_class": {
+        "background_binary": 0.565028901734104,
+        "eclipsing_binary": 0.7360039810898233,
+        "flare_star": 0.6593264248704663,
+        "instrument_glitch": 0.7742117117117117,
+        "planet": 0.4593474883480062,
+        "pulsating_star": 0.7356257046223225,
+        "quiet_star": 0.6053078556263269,
+        "starspots": 0.5342155667769458
+      }
+    },
+    {
+      "name": "Candidate (42/48/10)",
+      "weights": [
+        0.42,
+        0.48,
+        0.1
+      ],
+      "strat_f1": 0.6460416193013787,
+      "det_f1": 0.6332428260817842,
+      "det_fold_mean": 0.6333324314844374,
+      "det_fold_std": 0.014263488123366412,
+      "det_folds": [
+        0.656298681607349,
+        0.6379260395544559,
+        0.6346083975699677,
+        0.6239793548340176,
+        0.6138496838563963
+      ],
+      "per_class": {
+        "background_binary": 0.5641952983725136,
+        "eclipsing_binary": 0.7362391033623911,
+        "flare_star": 0.6586709886547812,
+        "instrument_glitch": 0.7729441481897278,
+        "planet": 0.45890588540316307,
+        "pulsating_star": 0.7348548887010425,
+        "quiet_star": 0.6054753820033956,
+        "starspots": 0.5346569139672588
+      }
+    }
+  ],
+  "passes_gate": false,
+  "peak_gain": 0.0001904501086774646,
+  "changed_predictions": 30,
+  "changed_pct": 0.4285714285714286,
+  "p7_sha256": "243b382359960efcc2fb44a75dfaa993f906b0052b4d7479813c6f1bf9d7ac8b",
+  "p5_sha256": "6a378eae06765a28a39d41a322f47ff25512a43a47827ff4576940282b74330e"
+}

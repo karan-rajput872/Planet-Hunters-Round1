@@ -22,7 +22,7 @@
 ### Option A: Windows (PowerShell)
 ```powershell
 # 1. Clone repository
-git clone https://github.com/username/Planet-Hunters-Round1.git
+git clone https://github.com/karan-rajput872/Planet-Hunters-Round1.git
 cd Planet-Hunters-Round1
 
 # 2. Create virtual environment
@@ -37,7 +37,7 @@ pip install -r requirements.txt
 ### Option B: Linux / macOS (Bash)
 ```bash
 # 1. Clone repository
-git clone https://github.com/username/Planet-Hunters-Round1.git
+git clone https://github.com/karan-rajput872/Planet-Hunters-Round1.git
 cd Planet-Hunters-Round1
 
 # 2. Create virtual environment
@@ -137,19 +137,27 @@ OK
 
 ---
 
-## 8. Full Retraining from Scratch (Optional)
+## 8. Full Retraining & Phase 5 Promotion
 
-To wipe the cached features and re-execute the entire pipeline end-to-end:
-
+### Phase 5 Production Pipeline:
 ```powershell
-# 1. Force re-extraction of all 85 features (~2.5 minutes on CPU)
+# 1. Extract 88 Cotrended Features with Camera/CCD systematic trend removal
+python src/phase5_features.py
+
+# 2. Run multi-model training and generate verified candidates
+python src/phase5_generate_submissions.py
+
+# 3. Validate promoted submission
+python validate_submission.py submissions/submission_FINAL.csv
+```
+
+### Phase 4 Baseline Retraining (Historical Baseline):
+```powershell
+# 1. Force re-extraction of baseline 85 features
 python src/feature_engineering.py
 
-# 2. Retrain 5-fold dual-architecture ensemble (~78 seconds on CPU)
+# 2. Retrain 5-fold dual-architecture ensemble
 python src/train_v3_dual_ensemble.py
-
-# 3. Validate newly generated predictions
-python validate_submission.py submissions/submission_FINAL.csv
 ```
 
 ---

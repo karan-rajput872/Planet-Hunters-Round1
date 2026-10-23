@@ -22,6 +22,9 @@ from dashboard.components.features import render_features
 from dashboard.components.validator import render_validator
 from dashboard.components.explorer import render_explorer
 from dashboard.components.info import render_info
+from dashboard.components.phase6_preview import render_phase6_preview
+from dashboard.components.phase7_lab import render_phase7_lab
+from dashboard.components.phase8_lab import render_phase8_lab
 
 # Streamlit Page Setup
 st.set_page_config(
@@ -87,6 +90,9 @@ with st.sidebar:
         "Navigation Station Label Hidden",
         options=[
             "Complete Platform View",
+            "PHASE 8 — TOP 30 OPTIMIZATION LAB",
+            "PHASE 7 — FINAL GENERALIZATION LAB",
+            "PHASE 6 — LEADERBOARD OPTIMIZATION",
             "Performance Intelligence",
             "Classification Distribution",
             "Model Architecture",
@@ -120,12 +126,12 @@ with st.sidebar:
             <span style="color: #059669; font-weight: 700;">14/14 PASS</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-            <span style="color: {brand_sub};">Holdout F1:</span>
-            <span style="font-family: 'JetBrains Mono'; font-weight: 600; color: #0284C7;">0.5956</span>
+            <span style="color: {brand_sub};">OOF Macro F1:</span>
+            <span style="font-family: 'JetBrains Mono'; font-weight: 600; color: #0284C7;">0.6455</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-            <span style="color: {brand_sub};">OOF Macro F1:</span>
-            <span style="font-family: 'JetBrains Mono'; font-weight: 600; color: #6366F1;">0.5915</span>
+            <span style="color: {brand_sub};">Detector OOF:</span>
+            <span style="font-family: 'JetBrains Mono'; font-weight: 600; color: #6366F1;">0.6336</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
             <span style="color: {brand_sub};">Test Targets:</span>
@@ -146,6 +152,12 @@ theme = st.session_state.theme
 
 if view_mode == "Complete Platform View":
     render_hero(theme)
+    render_phase8_lab(theme)
+    st.markdown("<div style='margin-bottom: 28px;'></div>", unsafe_allow_html=True)
+    render_phase7_lab(theme)
+    st.markdown("<div style='margin-bottom: 28px;'></div>", unsafe_allow_html=True)
+    render_phase6_preview(theme)
+    st.markdown("<div style='margin-bottom: 28px;'></div>", unsafe_allow_html=True)
     render_performance(theme)
     st.markdown("<div style='margin-bottom: 28px;'></div>", unsafe_allow_html=True)
     render_classification(theme)
@@ -159,6 +171,18 @@ if view_mode == "Complete Platform View":
     render_explorer(theme)
     st.markdown("<div style='margin-bottom: 28px;'></div>", unsafe_allow_html=True)
     render_info(theme)
+
+elif view_mode == "PHASE 8 — TOP 30 OPTIMIZATION LAB":
+    render_hero(theme)
+    render_phase8_lab(theme)
+
+elif view_mode == "PHASE 7 — FINAL GENERALIZATION LAB":
+    render_hero(theme)
+    render_phase7_lab(theme)
+
+elif view_mode == "PHASE 6 — LEADERBOARD OPTIMIZATION":
+    render_hero(theme)
+    render_phase6_preview(theme)
 
 elif view_mode == "Performance Intelligence":
     render_hero(theme)

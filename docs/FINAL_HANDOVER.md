@@ -1,9 +1,10 @@
 # 🏁 Planet Hunters — Final Competition Handover
 ## ML Challenge Hack4Hack 2026 | Round 1
 
-**Handover Status:** COMPLETED & AUDITED
-**Handover Date:** October 2026
-**Final Submission Candidate:** `submissions/submission_FINAL.csv`
+**Handover Status:** COMPLETED, AUDITED & READY FOR MANUAL UPLOAD  
+**Handover Date:** October 2026  
+**Final Submission Candidate:** `submissions/submission_FINAL.csv` (Promoted Phase 5 Tri-Ensemble)  
+**Original Phase 4 Backup:** `submissions/submission_FINAL_PHASE4_BACKUP.csv` (Bitwise Preserved)  
 
 ---
 
@@ -11,13 +12,20 @@
 
 | Parameter | Specification | Verification Status |
 |:---|:---|:---:|
-| **Recommended File** | `submissions/submission_FINAL.csv` | **VERIFIED** |
+| **Official Submission File** | `submissions/submission_FINAL.csv` | **VERIFIED PROMOTED** |
 | **Relative Path** | `submissions/submission_FINAL.csv` (from repository root) | **VERIFIED** |
-| **Alternative Candidate** | `submissions/submission_v2.csv` (Pure 5-Fold LightGBM) | **VERIFIED** |
+| **Verified SHA-256 Checksum**| `6a378eae06765a28a39d41a322f47ff25512a43a47827ff4576940282b74330e` | **MATCHED** |
+| **Original Phase 4 Backup** | `submissions/submission_FINAL_PHASE4_BACKUP.csv` | **VERIFIED PRESERVED** |
+| **Backup SHA-256 Checksum** | `f53a08c47155bc907f855b0626cb38134aae298a58903b18f3d56818f0c053c1` | **MATCHED** |
+| **Model Architecture** | **Phase 5 Tri-Ensemble** (50% LightGBM + 40% HistGB + 10% CatBoost) | **VERIFIED** |
+| **Feature Pipeline** | **88 Features** with Camera/CCD Cotrending & Astro Vetting | **VERIFIED** |
 | **Total Test Rows** | Exactly **7,000** data rows (+ 1 header row) | **VERIFIED** |
 | **Columns** | Exactly **2 columns**: `id,label` | **VERIFIED** |
-| **Validation Exit Code** | **Code 0** (All 14 checks passed) | **VERIFIED** |
-| **Reproducibility** | 100.0000% Bitwise match against champion `submission_v3.csv` | **VERIFIED** |
+| **Validation Status** | **Code 0** (All 14 checks passed on FINAL & candidates) | **VERIFIED** |
+| **Unit Test Suite** | `tests/test_pipeline.py`: 12/12 tests passed | **VERIFIED** |
+| **Phase 7 Candidate** | `submissions/submission_PHASE7_candidate_01.csv` (SHA-256: `243b3823...`) | **VERIFIED AUDITED** |
+| **Phase 8 Candidate** | `submissions/submission_PHASE8_candidate_01.csv` (SHA-256: `7597c8e9...`) | **VERIFIED AUDITED (Experimental)** |
+| **Final Recommendation** | **RETAIN APPROVED `submission_FINAL.csv`** (Upload immediately) | **APPROVED** |
 
 ---
 
@@ -32,25 +40,21 @@ Ensure the file has not been altered:
 ```
 Confirm the terminal displays: `FINAL VALIDATION VERDICT: PASSED`.
 
-### Step 2: Access Competition Portal
-1. Open your web browser and navigate to the official **Hack4Hack 2026 Round 1** competition website.
-2. Log in to your participant account.
-3. Select the **Planet Hunters — Find New Worlds in Starlight** challenge.
-4. Navigate to the **Submit Predictions** or **Submission** page.
+### Step 2: Verify SHA-256 Hash
+```powershell
+Get-FileHash submissions\submission_FINAL.csv -Algorithm SHA256
+```
+Confirm the hash matches:
+`6A378EAE06765A28A39D41A322F47FF25512A43A47827FF4576940282B74330E`
 
-### Step 3: Upload the CSV
-1. Choose the file at:
+### Step 3: Access Competition Portal & Upload
+1. Open your web browser and navigate to the official **Hack4Hack 2026 Round 1** competition website.
+2. Log in to your participant account and open the **Planet Hunters** challenge.
+3. Navigate to the **Leaderboard** tab and select:
    ```
    submissions/submission_FINAL.csv
    ```
-2. Click **Submit** or **Upload**.
-
-### Step 4: Verify Portal Acceptance
-1. Confirm that the platform acknowledges receipt with status: `Accepted` or `Scoring`.
-2. Ensure the portal processes all **7,000 rows** without formatting errors.
-3. If the platform allows 2 submissions:
-   - Upload `submissions/submission_FINAL.csv` as your **Primary Submission**.
-   - Optionally upload `submissions/submission_v2.csv` as your **Secondary Submission** to benchmark the Dual-Architecture ensemble against a pure 5-fold LightGBM model on the public 30% leaderboard.
+4. Click **Upload** (uses 1 of your 3 remaining uploads today).
 
 ---
 
@@ -60,23 +64,21 @@ Please record your official competition feedback below for future reference and 
 
 | Information Field | Participant Record Entry |
 |:---|:---|
-| **Portal Submission Timestamp** | `[Enter Date & Time here, e.g. 2026-10-22 14:30 IST]` |
+| **Portal Submission Timestamp** | `[Enter Date & Time here, e.g. 2026-10-22 23:55 IST]` |
 | **Uploaded Filename** | `submission_FINAL.csv` |
 | **Platform Submission ID** | `[Enter Platform Submission ID if provided]` |
 | **Portal Acceptance Status** | `[e.g. Successfully Evaluated / Accepted]` |
 | **Public Leaderboard Macro F1** | `[Enter your Public LB Macro F1 score here]` |
-| **Public Leaderboard Rank** | `[Enter your Leaderboard Rank, e.g. #3 / Top 5%]` |
+| **Public Leaderboard Rank** | `[Enter your Leaderboard Rank, e.g. Top 3]` |
 | **Total Participants on Leaderboard**| `[Enter total active participants]` |
-| **Variance vs. OOF Score (0.5915)** | `[Public LB Score - 0.5915]` |
+| **Variance vs. Detector CV (0.6336)** | `[Public LB Score - 0.6336]` |
 | **Final Competition Standing / Prize**| `[Record after Round 1 evaluation concludes]` |
 
 ---
 
 ## 4. Key Project Artifacts Summary
 
-- **Source Code:** Modular pipeline in `src/` (`data_loader.py`, `feature_engineering.py`, `model_training.py`, `cross_validation.py`, `submission_validation.py`, `train_v3_dual_ensemble.py`).
-- **Trained Model Binaries:** 10 fold models stored in `models/tuned_cv_models/` (5 LightGBM + 5 HistGB).
-- **Processed Features:** Columnar parquets in `data/processed/train_features.parquet` (18,000 × 85) and `test_features.parquet` (7,000 × 85).
-- **Visual Assets:** 7 diagnostic plots in `assets/architecture/` and `assets/plots/`.
-- **Documentation:** Full technical suite in `docs/` and project `README.md`.
-- **Portfolio Package:** Compressed standalone archive in `dist/Planet-Hunters-Round1-Portfolio-Ready.zip`.
+- **Source Code:** Modular pipeline in `src/` (`data_loader.py`, `feature_engineering.py`, `phase5_cotrending.py`, `phase5_features.py`, `phase5_generate_submissions.py`).
+- **Features:** Columnar parquets in `data/processed/train_features_v5.parquet` (18,000 × 88) and `test_features_v5.parquet` (7,000 × 88).
+- **Submissions:** Official promoted candidate `submissions/submission_FINAL.csv`, original backup `submissions/submission_FINAL_PHASE4_BACKUP.csv`, and candidate versions `submission_PHASE5_candidate_01.csv` & `submission_PHASE5_candidate_02.csv`.
+- **Documentation:** Full technical reports in `reports/` and project guides in `docs/`.

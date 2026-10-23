@@ -51,10 +51,10 @@ def render_architecture(theme: str = "light"):
             </div>
             <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <span class="badge-status badge-neutral" style="font-size: 0.78rem; padding: 4px 10px;">
-                    10 Estimators • 5-Fold Stratified
+                    15 Estimators • 5-Fold Stratified & Detector CV
                 </span>
                 <span class="badge-status badge-passed" style="font-size: 0.78rem; padding: 4px 10px;">
-                    75:25 Calibrated Blend
+                    50:40:10 Tri-Ensemble Blend
                 </span>
             </div>
         </div>
@@ -78,17 +78,17 @@ def render_architecture(theme: str = "light"):
                     <span style="font-size: 0.75rem; color: #0284C7; font-weight: 600;">Data Ingestion</span>
                 </div>
                 <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: {text_col}; margin-bottom: 6px; line-height: 1.3;">
-                    Data Ingestion & Preprocessing
+                    Ingestion & Cotrending
                 </div>
                 <div style="font-size: 0.78rem; color: {sub_color}; line-height: 1.4; margin-bottom: 10px;">
-                    Raw multi-cadence time-series ingestion and rolling signal conditioning.
+                    Raw time-series ingestion and Camera/CCD systematic cotrending.
                 </div>
                 <div style="font-size: 0.75rem; color: {text_col}; line-height: 1.5; font-family: 'Inter', sans-serif;">
                     • <strong>Stellar lightcurve input</strong><br>
                     • 1,315 flux cadences per star<br>
+                    • <strong>Camera/CCD Median Cotrending</strong><br>
                     • Spatial (x, y) centroid series<br>
-                    • 1-day rolling median detrending<br>
-                    • Stellar metadata (Teff, logg)
+                    • 1-day rolling median detrending
                 </div>
             </div>
             <div style="border-top: 1px solid {border_col}; margin-top: 10px; padding-top: 6px; font-size: 0.7rem; color: {sub_color}; text-align: right;">
@@ -115,10 +115,10 @@ def render_architecture(theme: str = "light"):
                     Domain-grounded extraction across 8 astronomical modules.
                 </div>
                 <div style="font-size: 0.75rem; color: {text_col}; line-height: 1.5; font-family: 'Inter', sans-serif;">
-                    • <strong>85 Verified Features</strong> (Vectorized)<br>
+                    • <strong>88 Verified Features</strong> (Vectorized)<br>
                     • Photometric moments (MAD, skew)<br>
                     • Lomb-Scargle & FFT power peaks<br>
-                    • Box Least Squares (BLS) SNR<br>
+                    • Transit SNR & Odd-Even depth ratio<br>
                     • Centroid shift & flare asymmetry
                 </div>
             </div>
@@ -140,17 +140,17 @@ def render_architecture(theme: str = "light"):
                     <span style="font-size: 0.75rem; color: {primary_blue}; font-weight: 600;">Cross-Validation</span>
                 </div>
                 <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: {text_col}; margin-bottom: 6px; line-height: 1.3;">
-                    Stratified Five-Fold Training
+                    Multi-Model Five-Fold Training
                 </div>
                 <div style="font-size: 0.78rem; color: {sub_color}; line-height: 1.4; margin-bottom: 10px;">
-                    Dual-architecture cross-validation with zero out-of-fold leakage.
+                    Tri-architecture cross-validation with zero out-of-fold leakage.
                 </div>
                 <div style="font-size: 0.75rem; color: {text_col}; line-height: 1.5; font-family: 'Inter', sans-serif;">
-                    • <strong>5-Fold Stratified Splits</strong> (Seed 42)<br>
+                    • <strong>5-Fold Stratified & Detector Splits</strong><br>
                     • 5 × LightGBM Estimators<br>
                     • 5 × HistGradientBoosting Estimators<br>
-                    • Out-of-fold probability calibration<br>
-                    • Zero train-test contamination
+                    • 5 × CatBoost Oblivious Estimators<br>
+                    • Out-of-detector generalization: 0.6336
                 </div>
             </div>
             <div style="border-top: 1px solid {border_col}; margin-top: 10px; padding-top: 6px; font-size: 0.7rem; color: {sub_color}; text-align: right;">
@@ -174,13 +174,13 @@ def render_architecture(theme: str = "light"):
                     Soft-Voting Ensemble
                 </div>
                 <div style="font-size: 0.78rem; color: {sub_color}; line-height: 1.4; margin-bottom: 10px;">
-                    Weighted fusion yielding discrete 8-class assignments.
+                    Optimal fusion yielding discrete 8-class assignments.
                 </div>
                 <div style="font-size: 0.75rem; color: {text_col}; line-height: 1.5; font-family: 'Inter', sans-serif;">
-                    • <strong>LightGBM Contribution: 75%</strong><br>
-                    • <strong>HistGB Contribution: 25%</strong><br>
+                    • <strong>LightGBM: 50% | HistGB: 40% | CatBoost: 10%</strong><br>
                     • Probability-level soft voting<br>
                     • Eight-class argmax prediction<br>
+                    • <strong>OOF Macro F1: 0.6455</strong><br>
                     • Exactly 7,000 verified rows
                 </div>
             </div>
@@ -204,9 +204,9 @@ def render_architecture(theme: str = "light"):
             <div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <h4 style="margin: 0; font-size: 0.98rem; font-family: 'Space Grotesk', sans-serif; color: {text_col};">
-                        Champion Ensemble Specification Matrix
+                        Promoted Phase 5 Ensemble Specification Matrix
                     </h4>
-                    <span style="font-size: 0.72rem; color: {sub_color}; font-family: 'JetBrains Mono';">10 Estimators</span>
+                    <span style="font-size: 0.72rem; color: {sub_color}; font-family: 'JetBrains Mono';">15 Estimators</span>
                 </div>
                 <table style="width: 100%; border-collapse: collapse; font-size: 0.81rem; color: {text_col};">
                     <thead>
@@ -219,28 +219,34 @@ def render_architecture(theme: str = "light"):
                     </thead>
                     <tbody>
                         <tr style="border-bottom: 1px solid {border_col};">
-                            <td style="padding: 10px 8px; font-weight: 600; color: #0284C7;">LightGBM</td>
-                            <td style="padding: 10px 8px; font-family: 'JetBrains Mono'; color: {text_col}; text-align: center;">5</td>
-                            <td style="padding: 10px 8px; font-family: 'JetBrains Mono'; font-weight: 700; color: {primary_blue}; text-align: right;">75.0% (0.75)</td>
-                            <td style="padding: 10px 8px; color: {sub_color}; line-height: 1.35;">Leaf-wise splitting; captures sharp non-linear decision boundaries.</td>
+                            <td style="padding: 8px 8px; font-weight: 600; color: #0284C7;">LightGBM</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; color: {text_col}; text-align: center;">5</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; font-weight: 700; color: {primary_blue}; text-align: right;">50.0% (0.50)</td>
+                            <td style="padding: 8px 8px; color: {sub_color}; line-height: 1.35;">Leaf-wise splitting; captures sharp transit boundaries.</td>
                         </tr>
                         <tr style="border-bottom: 1px solid {border_col};">
-                            <td style="padding: 10px 8px; font-weight: 600; color: #6366F1;">HistGradientBoosting</td>
-                            <td style="padding: 10px 8px; font-family: 'JetBrains Mono'; color: {text_col}; text-align: center;">5</td>
-                            <td style="padding: 10px 8px; font-family: 'JetBrains Mono'; font-weight: 700; color: #6366F1; text-align: right;">25.0% (0.25)</td>
-                            <td style="padding: 10px 8px; color: {sub_color}; line-height: 1.35;">Binned histogram trees; regularizes probability overconfidence.</td>
+                            <td style="padding: 8px 8px; font-weight: 600; color: #6366F1;">HistGradientBoosting</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; color: {text_col}; text-align: center;">5</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; font-weight: 700; color: #6366F1; text-align: right;">40.0% (0.40)</td>
+                            <td style="padding: 8px 8px; color: {sub_color}; line-height: 1.35;">Binned histogram trees; regularizes probability overconfidence.</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid {border_col};">
+                            <td style="padding: 8px 8px; font-weight: 600; color: #10B981;">CatBoost</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; color: {text_col}; text-align: center;">5</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; font-weight: 700; color: #10B981; text-align: right;">10.0% (0.10)</td>
+                            <td style="padding: 8px 8px; color: {sub_color}; line-height: 1.35;">Symmetric oblivious trees; stabilizes rare class precision.</td>
                         </tr>
                         <tr style="background-color: {highlight_row_bg}; border-left: 3px solid {teal_accent};">
-                            <td style="padding: 10px 8px; font-weight: 700; color: {teal_accent};">Champion Dual Blend</td>
-                            <td style="padding: 10px 8px; font-family: 'JetBrains Mono'; color: {text_col}; text-align: center;">10</td>
-                            <td style="padding: 10px 8px; font-family: 'JetBrains Mono'; font-weight: 700; color: {teal_accent}; text-align: right;">100.0% (1.00)</td>
-                            <td style="padding: 10px 8px; color: {teal_accent}; font-weight: 600; line-height: 1.35;">Holdout Macro F1: 0.5956 | OOF F1: 0.5915</td>
+                            <td style="padding: 8px 8px; font-weight: 700; color: {teal_accent};">Phase 5 Tri-Ensemble</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; color: {text_col}; text-align: center;">15</td>
+                            <td style="padding: 8px 8px; font-family: 'JetBrains Mono'; font-weight: 700; color: {teal_accent}; text-align: right;">100.0% (1.00)</td>
+                            <td style="padding: 8px 8px; color: {teal_accent}; font-weight: 600; line-height: 1.35;">OOF Macro F1: 0.6455 | Detector F1: 0.6336</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div style="font-size: 0.74rem; color: {sub_color}; margin-top: 10px; line-height: 1.35;">
-                Optimal weighted soft-voting calibrated on 5-fold out-of-fold validation distributions.
+                Optimal weighted soft-voting calibrated on 5-fold out-of-fold and detector-channel splits.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -260,22 +266,23 @@ def render_architecture(theme: str = "light"):
                     <!-- Step 01 -->
                     <div style="margin-bottom: 8px;">
                         <div style="color: {sub_color}; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
-                            STEP 01 — FIVE-FOLD PROBABILITY AVERAGING
+                            STEP 01 — MULTI-MODEL FIVE-FOLD PROBABILITY AVERAGING
                         </div>
-                        <div style="font-size: 0.75rem; color: #0284C7;">P_lgb = (1/5) × Σ predict_proba(LightGBM_i)</div>
-                        <div style="font-size: 0.75rem; color: #6366F1;">P_hgb = (1/5) × Σ predict_proba(HistGradientBoosting_i)</div>
+                        <div style="font-size: 0.74rem; color: #0284C7;">P_lgb = (1/5) × Σ predict_proba(LightGBM_i)</div>
+                        <div style="font-size: 0.74rem; color: #6366F1;">P_hgb = (1/5) × Σ predict_proba(HistGradientBoosting_i)</div>
+                        <div style="font-size: 0.74rem; color: #10B981;">P_cb  = (1/5) × Σ predict_proba(CatBoost_i)</div>
                     </div>
 
                     <!-- Step 02 -->
                     <div style="margin-bottom: 8px;">
                         <div style="color: {sub_color}; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">
-                            STEP 02 — OPTIMAL PROBABILITY FUSION (75:25)
+                            STEP 02 — OPTIMAL PROBABILITY FUSION (50:40:10)
                         </div>
                         <div style="font-size: 0.76rem; font-weight: 700; color: {primary_blue};">
-                            P_final = 0.75 × P_lgb + 0.25 × P_hgb
+                            P_final = 0.50 × P_lgb + 0.40 × P_hgb + 0.10 × P_cb
                         </div>
                         <div style="font-size: 0.68rem; color: {sub_color}; font-family: 'Inter', sans-serif; margin-top: 1px;">
-                            Combines the probability distributions generated by the two estimator families.
+                            Combines probability distributions from all three heterogeneous model families.
                         </div>
                     </div>
 

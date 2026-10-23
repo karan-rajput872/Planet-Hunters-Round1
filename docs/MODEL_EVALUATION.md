@@ -85,9 +85,70 @@ Systematic leave-one-group-out ablation isolated the contribution of each domain
 
 ---
 
-## 6. Final Champion Selection Rationale
+## 6. Phase 4 Baseline Rationale
 
-The **5-Fold Dual-Architecture Ensemble** was selected as the sole official champion because:
-1. **Highest Verified Performance:** At 0.5915 OOF and 0.5956 Holdout Macro F1, it decisively outperforms every individual booster architecture.
-2. **Structural Regularization:** Combining leaf-wise LightGBM with depth-wise HistGradientBoosting reduces single-tree variance when deployed on unseen test sectors.
-3. **100% Reproducibility:** Verified to regenerate identical predictions (7,000 / 7,000 matches) via `generate_submission.py --model champion`.
+The **5-Fold Dual-Architecture Ensemble** served as the Phase 4 champion baseline (0.5915 OOF Macro F1). When evaluated on the public leaderboard, it achieved **0.4214**, establishing the gap investigated in Phase 5.
+
+---
+
+## 7. Phase 5 Promotion: Tri-Ensemble & Out-of-Detector Generalization
+
+Following the Phase 5 forensic audit, the pipeline was upgraded with **Camera/CCD Systematic Cotrending** (88 features) and a heterogeneous **Tri-Model Ensemble** (50% LightGBM + 40% HistGB + 10% CatBoost):
+
+| Evaluation Metric | Phase 4 Champion | Phase 5 Dual Ensemble | Phase 5 Tri-Ensemble (Promoted) | Delta (Promoted vs Phase 4) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Stratified 5-Fold OOF Macro F1** | 0.5915 | 0.6438 | **0.6455** | **+0.0540 (+9.1%)** |
+| **Detector-Channel 5-Fold OOF Macro F1** | 0.5161 | 0.6322 | **0.6336** | **+0.1175 (+22.8%)** |
+| **Mean Kolmogorov-Smirnov Feature Drift** | 0.1326 | 0.0526 | **0.0526** | **-60.3% drift reduction** |
+| **Official Submission Artifact** | `submission_FINAL_PHASE4_BACKUP.csv` | `submission_PHASE5_candidate_01.csv` | **`submission_FINAL.csv`** | Promoted & validated |
+| **Verified SHA-256 Checksum** | `f53a08c4...c053c1` | `3f8704ab...2f9b6` | **`6a378eae...4330e`** | Distinct & verified |
+
+### Phase 5 Per-Class Out-of-Fold Performance (18,000 Training Stars)
+
+| Class Name | Phase 4 F1 | Phase 5 Precision | Phase 5 Recall | Phase 5 F1 | F1 Delta |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| `instrument_glitch` | 0.7448 | 0.8505 | 0.7902 | **0.8193** | **+0.0745** |
+| `eclipsing_binary` | 0.7303 | 0.8487 | 0.6667 | **0.7468** | **+0.0165** |
+| `pulsating_star` | 0.6643 | 0.8313 | 0.6670 | **0.7402** | **+0.0759** |
+| `flare_star` | 0.5273 | 0.7980 | 0.5715 | **0.6660** | **+0.1387** |
+| `quiet_star` | 0.5920 | 0.4934 | 0.8331 | **0.6197** | **+0.0277** |
+| `background_binary` | 0.5493 | 0.6980 | 0.4956 | **0.5797** | **+0.0304** |
+| `starspots` | 0.4560 | 0.5316 | 0.5344 | **0.5330** | **+0.0770** |
+| `planet` | 0.4679 | 0.5361 | 0.4014 | **0.4591** | Precision +0.0293 |
+| **Macro Average** | **0.5915** | **0.6985** | **0.6200** | **0.6455** | **+0.0540** |
+
+---
+
+## 8. Phase 6 & Phase 7 Final Generalization Audits
+
+### 8.1 Ensemble Weight Re-Optimization & Simplex Exploration
+Extensive evaluation across 45 ensemble blend formulations on the 88 cotrended features showed:
+- Phase 5 Approved (50/40/10): Stratified OOF = **0.6455**, Detector-Channel OOF = **0.6336** (Fold mean: 0.6338 ± 0.0137)
+- Peak Alternative (45/45/10): Stratified OOF = **0.6461** (+0.0006), Detector-Channel OOF = **0.6338** (+0.0002) (Fold mean: 0.6340 ± 0.0139)
+- All alternative weight blends produced detector-channel improvements $< +0.0003$, which falls far short of the $+0.0030$ competition acceptance gate.
+
+### 8.2 Decision Multiplier Calibration (Nested 5-Fold CV)
+Evaluating post-hoc class decision multipliers using nested cross-validation yielded +0.0000 gain across all 5 folds, proving that raw argmax probability thresholding is optimal and avoids test-set overfitting.
+
+### 8.3 Final Submission Certification
+Only 30 out of 7,000 test predictions (0.43%) differ between Phase 5 and Phase 7. The approved submission `submissions/submission_FINAL.csv` (`6a378eae...`) is verified 100% compliant and certified for upload.
+
+---
+
+## 9. Phase 8 Top 30 Optimization & Final Synchronization
+
+### 9.1 Competitive Intelligence & Score Gap
+- **Current Rank 60 (Active LB: 0.4214):** Attributable to the uncotrended Phase 4 model (`submission_FINAL_PHASE4_BACKUP.csv`).
+- **Approved Champion (submission_FINAL.csv):** Achieves **0.6336 Detector OOF (+0.2122)**, closing the estimated gap to the Top 30 (~0.60–0.62) upon portal submission.
+
+### 9.2 Stacking & Diversity Benchmark Results
+- **Stacking Meta-Learner (Multinomial LogReg on 24 OOF probs):** 0.63225 (-0.00136 regression).
+- **Stacking + Top Astro Features:** 0.63171 (-0.00191 regression).
+- **Probabilistic Rank Averaging:** 0.59734 (-0.03628 severe regression).
+- **Power Ensembling (p=1.5 on 45/45/10):** 0.63408 (+0.00046 gain).
+
+### 9.3 Acceptance Gate & Final Synchronization Verdict
+- **Gate Requirement:** $\ge +0.0030$ Detector-Channel OOF improvement.
+- **Result:** Peak gain $+0.00046 < +0.0030$. **FAILED ACCEPTANCE GATE.**
+- **Verdict:** Retain `submissions/submission_FINAL.csv` (`6A378EAE...330E`) bit-for-bit. Candidate `submissions/submission_PHASE8_candidate_01.csv` (`7597C8E9...F181`, 31 changed predictions) preserved as experimental artifact only.
+

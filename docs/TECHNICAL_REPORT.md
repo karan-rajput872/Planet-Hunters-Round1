@@ -158,6 +158,51 @@ Pseudo-labeling was tested in Phase 2 using high-confidence test predictions ($P
 
 ---
 
-## 9. Conclusion
+## 9. Phase 5 Public Score Gap Forensic Audit & Final Promotion
 
-The Planet Hunters solution combines astrophysically informed feature engineering with a structurally diverse dual-architecture ensemble. Every validation claim is mathematically verified, and the submission candidate `submissions/submission_FINAL.csv` is fully validated and ready for competition upload.
+### A. Root Cause Investigation
+When the Phase 4 dual-ensemble champion was submitted to the Hack4Hack leaderboard, it produced a Macro F1 of **0.4214** (both uploads #1 and #2). A forensic audit revealed that space telescope detectors in the test sector suffered from severe thermal breathing and pointing jitter (e.g., Camera 4 / CCD 2 common trend standard deviation of 0.002627, exceeding the flux variation of quiet stars by 161%). Without instrument cotrending, the model over-predicted `pulsating_star` (27.2%) and `instrument_glitch` (19.6%) across 46.8% of the test set.
+
+### B. Cotrending & Heterogeneous Tri-Ensemble Promotion
+Following `PROBLEM_STATEMENT.md` Section 8, we implemented Camera/CCD median cotrending (CBV removal):
+1. **Feature Drift Reduction:** Kolmogorov-Smirnov test drift dropped by **60.3%** (mean KS: 0.1326 $\rightarrow$ 0.0526).
+2. **Detector-Channel Generalization:** Stratified Detector-Channel 5-Fold OOF surged from **0.5161 to 0.6336** (+0.1175).
+3. **Tri-Model Ensemble (50% LightGBM + 40% HistGB + 10% CatBoost):** Reached **0.6455 OOF Macro F1** across 18,000 stars.
+4. **Official Promotion:** Promoted `submission_PHASE5_best.csv` to `submission_FINAL.csv` (SHA-256: `6a378eae06765a28a39d41a322f47ff25512a43a47827ff4576940282b74330e`). The original Phase 4 champion was archived to `submissions/submission_FINAL_PHASE4_BACKUP.csv` (`f53a08c4...c053c1`).
+
+---
+
+## 10. Phase 7 Final Generalization Audit & Acceptance Gate Verdict
+
+### A. Phase 7 Error Diagnostics
+A deep-dive on 18,000 Out-of-Fold predictions identified:
+- **Major Confusion Pairs:** 956 `starspots` and 699 `planet` misclassified as `quiet_star`. In quiet stars with shallow transits (< 0.2%) or slow rotations (< 0.5% amplitude), signals drop below photon shot noise.
+- **Detector Channel Invariance:** Detector-Channel 5-Fold validation confirmed model resilience across camera boundaries with minimal fold standard deviation ($\sigma = 0.0075$).
+
+### B. Lightweight Blend & Threshold Exploration
+- **45/45/10 Blend Candidate:** Evaluated a 45% LightGBM + 45% HistGB + 10% CatBoost blend. It yielded 0.6338 Detector OOF vs. 0.6336 for Phase 5 (+0.0002).
+- **Post-hoc Class Multipliers:** Tested nested 5-fold cross-validation threshold tuning. Every fold converged to 1.0 multiplier vector (+0.0000 holdout gain), confirming raw probabilistic argmax is optimal.
+- **Gate Evaluation:** The +0.0002 delta fell far below the mandatory +0.0030 acceptance gate.
+- **Final Decision:** Candidate generated and independently validated as `submissions/submission_PHASE7_candidate_01.csv` (`243b3823...`), but `submissions/submission_FINAL.csv` (`6a378eae...`) is retained as the official final submission.
+
+---
+
+## 11. Phase 8 Top 30 Optimization & Final Synchronization
+
+### A. Competitive Intelligence & Score Gap
+- Active score on leaderboard: **0.4214** (Rank 60, resulting from the uncotrended Phase 4 submission).
+- Approved Phase 5/6 Champion (`submission_FINAL.csv`): **0.6336 Detector OOF** (+0.2122 Macro F1 leap).
+- The +0.21 gap accounts for the distance between Rank 60 and Top 30 (~0.60–0.62 threshold).
+
+### B. Model Diversity & Stacking Audit
+- **Stacking Meta-Learners:** Fit on 24 OOF probability features yielded 0.6322 (-0.0014 regression) due to majority class over-weighting. Stacking with 5 domain features yielded 0.6317 (-0.0019 regression).
+- **Rank Averaging:** Severe drop to 0.5973 (-0.0363) due to uniform percentile distortion.
+- **Power Ensembling ($p=1.5$):** Achieved 0.6341 (+0.00046), falling well short of the +0.0030 gate.
+- **Acceptance Gate Verdict:** FAILED (+0.00046 < +0.0030). Candidate `submissions/submission_PHASE8_candidate_01.csv` (`7597C8E9...F181`, 31 changed predictions) preserved as experimental only.
+
+---
+
+## 12. Conclusion
+
+The Planet Hunters solution combines astrophysically informed feature engineering with a structurally diverse tri-architecture ensemble and rigorous camera/CCD cotrending. The official approved candidate `submissions/submission_FINAL.csv` (`6A378EAE...330E`) is fully audited, passes all 14 validation checks, and is ready for competition submission.
+

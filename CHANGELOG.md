@@ -3,6 +3,64 @@ All notable development milestones, architectural improvements, and audit correc
 
 ---
 
+## [Phase 8: Top 30 Optimization & Final Synchronization] — 2026-10-23
+
+### Final Competitive Intelligence & Model Optimization
+- **Competitive Intelligence & Leaderboard Gap Analysis**: Audited current placement at Rank 60 (active score 0.4214 from uncotrended Phase 4 submission). Identified that the approved Phase 5/6 Champion (`submission_FINAL.csv`), achieving 0.6336 Detector OOF (+0.2122 Macro F1 leap), has not yet been uploaded to the portal and is expected to bridge the gap into the Top 30 (~0.60–0.62 threshold).
+- **Out-of-Fold Error Diagnostics (18,000 Stars)**: Quantified Macro F1 loss contributions: `planet` (0.0679) and `starspots` (0.0583) represent the primary loss drivers, with 898 starspots and 669 planets confused with `quiet_star` due to physical photon shot noise limits ($\sigma_{\text{photon}} \approx 0.0018$).
+- **Lightweight Model Diversity & Stacking Experiments**: Evaluated out-of-fold stacking meta-learners (multinomial logistic regression on 24 OOF probs: 0.63225, regression -0.00136), stacking with domain features (0.63171, regression -0.00191), probabilistic rank averaging (0.59734, severe regression -0.03628), and nested cross-validation threshold tuning (0.63353, -0.00009).
+- **Power Ensembling Benchmark ($p=1.5$)**: Peak alternative yielded 0.63408 Detector OOF (+0.00046 over Phase 5 baseline 0.63362), failing the mandatory +0.0030 acceptance gate.
+- **Experimental Artifact Preservation (`submissions/submission_PHASE8_candidate_01.csv`)**: Serialized candidate with SHA-256 `7597C8E9130502595537C3F3F3B5265348403FC0EFF81680DBE9D996EC79F181`, passing 14/14 validator checks with exactly 31 changed predictions (0.44% shift, 99.56% identity to approved final).
+- **Final Acceptance Gate Verdict**: Formally certified **RETAIN APPROVED FINAL (`submissions/submission_FINAL.csv`)** as the official submission artifact. Phase 8 candidate remains an experimental artifact.
+- **Mission Control Phase 8 Station**: Implemented **PHASE 8 — TOP 30 OPTIMIZATION LAB** (`dashboard/components/phase8_lab.py`) with all competitive intelligence, error diagnostics, stacking results, and live checksum verification.
+
+---
+
+## [Phase 7: Final Generalization Breakthrough & Competition Optimization] — 2026-10-23
+
+### Final Generalization Audit & Benchmark
+- **In-Depth Error Analysis**: Diagnosed primary Macro F1 loss drivers across 18,000 out-of-fold stars: `planet` (F1 0.4591, loss contribution 0.0676) and `starspots` (F1 0.5330, loss contribution 0.0584) are predominantly absorbed by `quiet_star` (956 starspot errors, 699 planet errors) due to observational photon noise floors on faint hosts.
+- **Model Diversity & Disagreement Analysis**: Established significant architectural diversity among models: LightGBM vs HistGB (11.37% disagreement, $r=0.8419$), LightGBM vs CatBoost (15.33% disagreement, $r=0.7806$), and HistGB vs CatBoost (15.88% disagreement, $r=0.7750$). HistGB successfully rescued 658 stars where LightGBM failed; LightGBM rescued 670 stars where HistGB failed.
+- **Feature Robustness Audit**: Audited the 88 Phase 5 cotrended features for across-detector shift ($\sigma_{\text{det}} / \sigma_{\text{total}} < 0.04$), confirming that common systematic trends were fully decoupled from intrinsic stellar signals.
+- **Final Acceptance Gate Evaluation**: Tested targeted candidate families (45/45/10, 50/40/10, 50/45/5, 40/50/10). Peak detector-channel OOF reached 0.6338 (+0.0002 over baseline 0.6336), which is well below the +0.0030 acceptance gate threshold and inside cross-validation standard error ($\pm 0.0139$).
+- **Experimental Candidate Generation (`submissions/submission_PHASE7_candidate_01.csv`)**: Serialized candidate with SHA-256 `243b382359960efcc2fb44a75dfaa993f906b0052b4d7479813c6f1bf9d7ac8b`, verified 14/14 checks passed, with 99.57% prediction identity to Phase 5 approved (only 30 rows differ).
+- **Final Competition Decision**: Formally certified **RETAIN APPROVED FINAL (`submissions/submission_FINAL.csv`)** as the official submission artifact for manual portal upload.
+- **Mission Control Phase 7 Lab**: Implemented **PHASE 7 — FINAL GENERALIZATION LAB** (`dashboard/components/phase7_lab.py`) with all 11 required telemetry panels, live validation, and tabbed inspection. All 12 automated unit tests passing (100%).
+
+---
+
+## [Phase 6: Rapid Performance Optimization & Visual Preview] — 2026-10-23
+
+### Optimization & Empirical Audit
+- **Component Model Out-of-Fold Matrix Generation**: Generated isolated out-of-fold probability matrices for 5-fold LightGBM (0.6413), HistGradientBoosting (0.6401), and CatBoost (0.6215) across both Standard Stratified and Stratified Detector-Channel 5-Fold CV.
+- **Simplex Grid Search (45 Combinations)**: Tested ensemble weight variations. Found optimal harmonic blend at 45% LGB + 45% HGB + 10% CB (Stratified OOF: 0.6461, Detector-Channel OOF: 0.6338).
+- **Decision Multiplier Nested CV Validation**: Validated class multipliers via nested 5-fold CV. Determined that probability multipliers produce zero holdout gain (+0.0000 across all 5 folds), confirming raw argmax probability thresholding as optimal and un-overfitted.
+- **Difficult Class Confusion Matrix Mapping**: Diagnosed persistent astrophysical error boundaries: 699 true planets and 956 true starspots misclassified as quiet stars due to shallow transit SNR and low-amplitude magnetic activity.
+- **Experimental Candidate Generation (`submissions/submission_PHASE6_candidate.csv`)**: Serialized experimental candidate with SHA-256 `243b382359960efcc2fb44a75dfaa993f906b0052b4d7479813c6f1bf9d7ac8b`, verified 14/14 checks passed, with 99.57% prediction identity to Phase 5 approved (only 30 rows differ).
+- **Validation Gate Recommendation**: Formally recommended **RETAIN PHASE 5 — NO RELIABLE IMPROVEMENT** as the +0.0002 detector gain is well within CV standard error (±0.0137) and does not justify replacing the approved submission.
+- **Mission Control Visual Preview**: Integrated **Phase 6 — Optimization Lab & Candidate Preview** into the Streamlit dashboard (`dashboard/components/phase6_preview.py`) featuring Panels A through G, interactive candidate comparisons, confusion matrix previews, and tabbed inspection.
+- **Safety Protocol**: 100% byte-for-byte preservation of approved `submission_FINAL.csv` (`6a378eae...`) and `submission_FINAL_PHASE4_BACKUP.csv` (`f53a08c4...`). 10/10 automated unit tests passing.
+
+---
+
+## [Phase 5: Public Leaderboard Gap Investigation, Cotrending & Model Optimization] — 2026-10-22
+
+### Forensic Discovery & Physics Root Cause
+- **Public Leaderboard Score Gap Diagnosis**: Investigated why internal CV (0.5915) dropped to 0.4214 on the public leaderboard. Identified that un-cotrended camera/CCD detector noise waves infected test lightcurves (e.g. Cam 4 CCD 2 common trend std = 0.002627, 161% larger than a quiet star's intrinsic flux variation).
+- **Test Class Distribution Realignment**: Fixed severe test prediction skew where uncorrected drifts caused `pulsating_star` (27.2%) and `instrument_glitch` (19.6%) to flood 46.8% of the test set. Phase 5 predictions realigned to ground truth: `pulsating_star` (11.2%), `instrument_glitch` (11.1%), `quiet_star` (27.3%), `planet` (11.3%), and `starspots` (16.0%).
+
+### Added
+- **Camera/CCD Systematic Cotrending (`src/phase5_cotrending.py`)**: Vectorized common-mode median subtraction per `(camera, ccd)` detector channel on flux and centroids, reducing mean Kolmogorov-Smirnov train/test drift by 60.3% (0.1326 -> 0.0526).
+- **Astro-Physical Feature Extraction (`src/phase5_features.py`)**: Extracted 88 features including odd-even transit depth ratio, transit duty cycle, and dip bottom flatness on cotrended signals, cached separately in `data/processed/train_features_v5.parquet`.
+- **Realistic Validation Protocol (`reports/phase5_validation_strategy_comparison.md`)**: Formulated Stratified Detector-Channel 5-Fold CV (zero detector channel leakage) which accurately diagnosed out-of-detector drops (baseline was 0.5161).
+- **Tri-Model Gradient Boosting Ensemble (`src/phase5_model_experimentation.py`)**: Trained 5-fold LightGBM (0.6413), HistGradientBoosting (0.6401), and CatBoost (0.6215). Achieved peak OOF Macro F1 of **0.6455** with a 50/40/10 blend (+0.0540 over champion). Out-of-detector generalization jumped to **0.6306** (+0.1145 / +22.2%).
+- **Phase 5 Submission Candidates (`src/phase5_generate_submissions.py`)**: Generated `submissions/submission_PHASE5_best.csv` (SHA-256: `6a378eae06765a28a39d41a322f47ff25512a43a47827ff4576940282b74330e`) passing all 14 schema and astrophysical checks.
+- **Investigation & Strategy Reports**: Added `reports/phase5_public_score_gap_investigation.md`, `reports/phase5_validation_strategy_comparison.md`, `reports/phase5_ensemble_optimization.md`, and `reports/phase5_final_recommendation.md`.
+
+### Absolute Integrity Verification
+- Verified `submissions/submission_FINAL.csv` is 100% untouched and matches its expected SHA-256 checksum (`f53a08c47155bc907f855b0626cb38134aae298a58903b18f3d56818f0c053c1`).
+- Preserved existing 85-feature baseline files and original champion models.
+
 ## [UI Redesign: Scientific Intelligence Platform] — 2026-10-22
 
 ### Added

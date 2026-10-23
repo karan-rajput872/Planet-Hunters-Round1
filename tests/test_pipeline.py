@@ -77,17 +77,47 @@ class TestPlanetHuntersPipeline(unittest.TestCase):
                 self.assertTrue((df_orig["id"] == df_repr["id"]).all())
                 self.assertTrue((df_orig["label"] == df_repr["label"]).all())
 
-    def test_submission_FINAL_valid_and_identical(self):
+    def test_submission_FINAL_PHASE4_backup_valid_and_identical(self):
         sub_v3 = config.SUBMISSIONS_DIR / "submission_v3.csv"
+        sub_backup = config.SUBMISSIONS_DIR / "submission_FINAL_PHASE4_BACKUP.csv"
+        if sub_backup.exists():
+            res = validate_submission(sub_backup, verbose=False)
+            self.assertTrue(res["passed_all"])
+            if sub_v3.exists():
+                df_orig = pd.read_csv(sub_v3)
+                df_backup = pd.read_csv(sub_backup)
+                self.assertTrue((df_orig["id"] == df_backup["id"]).all())
+                self.assertTrue((df_orig["label"] == df_backup["label"]).all())
+
+    def test_submission_FINAL_valid_and_identical(self):
+        sub_best = config.SUBMISSIONS_DIR / "submission_PHASE5_best.csv"
         sub_final = config.SUBMISSIONS_DIR / "submission_FINAL.csv"
         if sub_final.exists():
             res = validate_submission(sub_final, verbose=False)
             self.assertTrue(res["passed_all"])
-            if sub_v3.exists():
-                df_orig = pd.read_csv(sub_v3)
+            if sub_best.exists():
+                df_best = pd.read_csv(sub_best)
                 df_final = pd.read_csv(sub_final)
-                self.assertTrue((df_orig["id"] == df_final["id"]).all())
-                self.assertTrue((df_orig["label"] == df_final["label"]).all())
+                self.assertTrue((df_best["id"] == df_final["id"]).all())
+                self.assertTrue((df_best["label"] == df_final["label"]).all())
+
+    def test_submission_PHASE6_candidate_valid(self):
+        sub_p6 = config.SUBMISSIONS_DIR / "submission_PHASE6_candidate.csv"
+        if sub_p6.exists():
+            res = validate_submission(sub_p6, verbose=False)
+            self.assertTrue(res["passed_all"])
+
+    def test_submission_PHASE6_candidate_01_valid(self):
+        sub_p6_01 = config.SUBMISSIONS_DIR / "submission_PHASE6_candidate_01.csv"
+        if sub_p6_01.exists():
+            res = validate_submission(sub_p6_01, verbose=False)
+            self.assertTrue(res["passed_all"])
+
+    def test_submission_PHASE7_candidate_01_valid(self):
+        sub_p7_01 = config.SUBMISSIONS_DIR / "submission_PHASE7_candidate_01.csv"
+        if sub_p7_01.exists():
+            res = validate_submission(sub_p7_01, verbose=False)
+            self.assertTrue(res["passed_all"])
 
 if __name__ == "__main__":
     unittest.main()

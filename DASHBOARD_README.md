@@ -55,28 +55,28 @@ The Mission Control Dashboard provides eight presentation-ready stations:
 
 2. **Performance Intelligence**
    - Verified offline validation metric cards:
-     - Champion OOF Macro F1: `0.5915`
-     - 5-Fold Mean Macro F1: `0.5914`
-     - 5-Fold Standard Deviation: `±0.0020`
-     - Champion Holdout Macro F1: `0.5956`
-   - Interactive Plotly model benchmark progression comparing ExtraTrees (0.5234), CatBoost (0.5512), HistGradientBoosting (0.5709), LightGBM (0.5914), and Champion Dual Ensemble (0.5956).
+     - Promoted Phase 5 Tri-Ensemble OOF Macro F1: `0.6455`
+     - Stratified Detector-Channel OOF Macro F1: `0.6336` (Generalization Benchmark)
+     - 5-Fold Standard Deviation: `±0.0031`
+     - Original Phase 4 Baseline OOF: `0.5915` (Detector OOF: `0.5161`)
+   - Interactive Plotly model benchmark progression comparing ExtraTrees (0.5234), CatBoost (0.5512), HistGradientBoosting (0.5709), LightGBM (0.5914), Phase 4 Dual Ensemble (0.5956), Phase 5 Dual (0.6438), and Promoted Phase 5 Tri-Ensemble (0.6455).
 
 3. **Classification Intelligence**
-   - Interactive horizontal bar chart and donut chart of exact class distributions:
-     - `pulsating_star`: 1,904 stars (27.2%)
-     - `instrument_glitch`: 1,372 stars (19.6%)
-     - `quiet_star`: 926 stars (13.2%)
-     - `starspots`: 827 stars (11.8%)
-     - `eclipsing_binary`: 687 stars (9.8%)
-     - `planet`: 516 stars (7.4%)
-     - `flare_star`: 471 stars (6.7%)
-     - `background_binary`: 297 stars (4.2%)
+   - Interactive horizontal bar chart and donut chart of exact Phase 5 class distributions:
+     - `quiet_star`: 1,912 stars (27.3%)
+     - `starspots`: 1,122 stars (16.0%)
+     - `planet`: 793 stars (11.3%)
+     - `pulsating_star`: 785 stars (11.2%)
+     - `instrument_glitch`: 777 stars (11.1%)
+     - `eclipsing_binary`: 685 stars (9.8%)
+     - `flare_star`: 505 stars (7.2%)
+     - `background_binary`: 421 stars (6.0%)
      - **Total:** 7,000 stars
    - Phenomenological descriptions and astrophysical taxonomic reference cards.
 
 4. **Model Architecture & Ensemble Flow**
-   - 4-stage prediction pipeline diagram (Stellar Inputs → Feature Extraction → Dual Weighted Ensemble → Calibrated Output).
-   - Ensemble weighting formula: `P_final = 0.75 · P_lgb + 0.25 · P_hgb`.
+   - 4-stage prediction pipeline diagram (Stellar Inputs → Camera/CCD Median Cotrending & 88 Features → Tri Weighted Ensemble → Calibrated Output).
+   - Ensemble weighting formula: `P_final = 0.50 · P_lgb + 0.40 · P_hgb + 0.10 · P_cat`.
    - Access to full high-resolution pipeline architectural schematic.
 
 5. **Scientific Feature Exploration**

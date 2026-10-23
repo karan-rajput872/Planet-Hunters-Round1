@@ -18,9 +18,9 @@ Planet Hunters is an end-to-end astronomical machine learning system engineered 
 
 The architecture is built on five core principles:
 - **Zero Data Leakage:** Full temporal isolation per star with no global scaling or target contamination.
-- **Domain-Grounded Signal Processing:** Extraction of 85 physical features capturing flux morphology, transit shapes, Fourier frequencies, and spatial centroid motion.
-- **Cross-Sector Invariance:** Elimination of sector-specific instrument IDs (`camera`, `ccd`) and reliance on normalized percentile ratios.
-- **Dual-Architecture Ensembling:** Soft-voting fusion combining leaf-wise LightGBM trees (75%) with regularized histogram HistGradientBoosting trees (25%).
+- **Domain-Grounded Signal Processing:** Extraction of 88 physical features capturing flux morphology, transit shapes, Fourier frequencies, spatial centroid motion, and Camera/CCD cotrended detrending.
+- **Cross-Sector Invariance:** Elimination of sector-specific instrument trends via unsupervised Camera/CCD median cotrending (CBV subtraction).
+- **Tri-Architecture Ensembling:** Soft-voting fusion combining leaf-wise LightGBM trees (50%), regularized histogram HistGradientBoosting trees (40%), and CatBoost oblivious trees (10%).
 - **Automated Verification:** 14-point pre-submission schema and distribution audit before final upload.
 
 ---
@@ -32,25 +32,27 @@ graph TD
     A["Raw Stellar Observations<br>18,000 Train / 7,000 Test Stars"] --> B["Data Ingestion & Signal Conditioning"]
     B --> B1["Flux Normalization: (flux / median) - 1.0"]
     B --> B2["2D Centroid Offset Centering"]
-    B --> B3["1-Day Fast 2D Rolling Median Detrending"]
+    B --> B3["Camera/CCD Cotrending (CBV Median Trend Subtraction)"]
+    B --> B4["1-Day Fast 2D Rolling Median Detrending"]
 
-    B1 & B2 & B3 --> C["Physics-Informed Feature Engineering<br>(85 Domain Features across 8 Modules)"]
+    B1 & B2 & B3 & B4 --> C["Physics-Informed Feature Engineering<br>(88 Domain Features across 8 Modules)"]
     C --> C1["Photometric Moments (MAD, Skew, Kurtosis)"]
     C --> C2["Lomb-Scargle & FFT Power Harmonics"]
-    C --> C3["Transit Dip Search & BLS SNR"]
-    C --> C4["2D Centroid Displacement Vetting"]
-    C --> C5["Flare Rise-Decay Asymmetry"]
+    C --> C3["Transit Dip Search, BLS SNR & Odd-Even Depth Ratio"]
+    C --> C4["2D Centroid Displacement Vetting & Astrometric Shifts"]
+    C --> C5["Flare Rise-Decay Asymmetry & Glitch Filtering"]
     C --> C6["Astrophysical Metadata (Teff, logg, Radius, Tmag)"]
 
-    C1 & C2 & C3 & C4 & C5 & C6 --> D["5-Fold Stratified Cross-Validation<br>(Seed 42, Zero Leakage)"]
+    C1 & C2 & C3 & C4 & C5 & C6 --> D["5-Fold Stratified & Detector-Channel Cross-Validation"]
 
-    D --> E1["5 × LightGBM Estimators<br>(Weight: 75% | Leaf-wise non-linear splitting)"]
-    D --> E2["5 × HistGradientBoosting Estimators<br>(Weight: 25% | Binned depth-wise trees)"]
+    D --> E1["5 × LightGBM Estimators<br>(Weight: 50% | Leaf-wise non-linear splitting)"]
+    D --> E2["5 × HistGradientBoosting Estimators<br>(Weight: 40% | Binned depth-wise trees)"]
+    D --> E3["5 × CatBoost Estimators<br>(Weight: 10% | Oblivious symmetric trees)"]
 
-    E1 & E2 --> F["Soft-Voting Probability Fusion<br>P_ens = 0.75·P_lgb + 0.25·P_hgb"]
+    E1 & E2 & E3 --> F["Soft-Voting Probability Fusion<br>P_ens = 0.50·P_lgb + 0.40·P_hgb + 0.10·P_cb"]
     F --> G["Discrete 8-Class Argmax Prediction<br>pred = CLASSES[argmax(P_ens, axis=1)]"]
     G --> H["14-Point Automated Audit Validation<br>validate_submission.py"]
-    H --> I["Official Submission Output<br>submissions/submission_FINAL.csv (7,000 rows, id,label)"]
+    H --> I["Official Promoted Submission<br>submissions/submission_FINAL.csv (7,000 rows, id,label)"]
 ```
 
 ---
