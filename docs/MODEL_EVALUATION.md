@@ -2,9 +2,9 @@
 ## Planet Hunters — ML Challenge Hack4Hack 2026 | Round 1
 
 **Evaluation Metric:** **Macro F1-Score** (Primary Competition Objective)
-**Evaluator:** Antigravity Senior Machine Learning Auditor
-**Date:** October 2026
-**Status:** 100% MATHEMATICALLY VERIFIED AGAINST SKLEARN METRICS
+**Author:** Priyanshu Karan (B.Tech Computer Science & Engineering, KIIT)  
+**Date:** October 2026  
+**Status:** 100% MATHEMATICALLY VERIFIED AGAINST SKLEARN METRICS  
 
 ---
 

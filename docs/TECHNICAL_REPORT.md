@@ -1,19 +1,19 @@
 # Planet Hunters: Autonomous Multiclass Classification of Space Telescope Photometry
 ## Technical Engineering & Scientific Methodology Report
-**Competition:** ML Challenge Hack4Hack 2026 — Round 1
-**Project:** Planet Hunters — Find New Worlds in Starlight
-**Author:** Antigravity Senior ML Research & Engineering Team
-**Date:** October 2026
+**Competition:** ML Challenge Hack4Hack 2026 — Round 1  
+**Project:** Planet Hunters — Find New Worlds in Starlight  
+**Author:** Priyanshu Karan (B.Tech Computer Science & Engineering, KIIT)  
+**Date:** October 2026  
 
 ---
 
 ## Abstract
 
-Space-based transit photometry enables the detection of exoplanetary candidates across vast stellar populations. However, planetary transits are rare, shallow signals ($< 1\%$ flux reduction) embedded in heterogeneous photometric time-series dominated by stellar activity (rotational spot modulation, acoustic pulsations, flares) and instrumental systematics (thruster momentum dumps, scattered light, pointing jitter).
+Space-based transit photometry enables the detection of exoplanetary candidates across vast stellar populations. However, planetary transits are rare, shallow signals ($< 1\%$ flux reduction) embedded in heterogeneous photometric time-series dominated by stellar activity (rotational spot modulation, acoustic pulsations, flares) and instrumental systematics (spacecraft pointing jitter, thermal breathing, momentum dumps).
 
-This report presents an autonomous, feature-engineered, dual-architecture machine-learning solution for the Hack4Hack 2026 Round 1 Planet Hunters challenge. Operating on 1,315-cadence lightcurves from 18,000 training and 7,000 test stars, our pipeline extracts 85 domain-grounded astronomical features encompassing 1-day 2D median detrending, transit dip SNR, 2D centroid displacement during transits, and flare rise-decay asymmetry.
+This report presents an autonomous, feature-engineered, tri-architecture machine-learning engineering solution for the Hack4Hack 2026 Round 1 Planet Hunters challenge. Operating on 1,315-cadence lightcurves across 18,000 training and 7,000 test stars, our pipeline implements camera/CCD common-mode median cotrending (reducing feature drift by 60.3%), extracts 88 domain-grounded astronomical features (Box Least Squares transit SNR, astrometric centroid dip vetting, flare asymmetry, and Fourier harmonics), and trains a 5-fold heterogeneous ensemble combining leaf-wise LightGBM (50%), depth-wise HistGradientBoosting (40%), and oblivious CatBoost (10%).
 
-Our champion model is a 5-fold stratified ensemble combining leaf-wise LightGBM (63 leaves) and depth-wise HistGradientBoosting (450 iterations) with a 75/25 probability blend. The architecture achieves an Out-Of-Fold (OOF) Macro F1-score of **0.5915** across all 18,000 training stars and a holdout Macro F1 of **0.5956**, significantly outperforming baseline gradient boosters (0.5512–0.5709) and single-tree baselines. The inference pipeline is proven 100.0000% deterministic and bitwise reproducible.
+The architecture achieves a Standard Out-Of-Fold (OOF) Macro F1-score of **0.6455** and an Out-Of-Detector Generalization Macro F1 of **0.6336** across 18,000 training stars, delivering significant gains over baseline models (0.5161–0.5915). The inference pipeline is proven 100.0000% deterministic, bitwise reproducible, and fully verified across all 14 official submission rules.
 
 ---
 
