@@ -208,37 +208,41 @@ def get_class_summary():
 
     return pd.DataFrame(summary)
 
-def run_submission_validation():
+def run_submission_validation(submission_path=None, test_stars_path=None):
     """
-    Executes the strict 14-check validator directly.
-    Returns verified result dictionary even if running in a cloud container without raw targets.
+    Executes the decoupled submission validator.
+    Never raises an unhandled exception or raw traceback.
     """
-    if SUBMISSION_FILE.is_file():
-        try:
-            return validate_submission(SUBMISSION_FILE, verbose=False)
-        except Exception as e:
-            print(f"[WARN] Validator execution notice: {e}")
+    sub_file = Path(submission_path or SUBMISSION_FILE).resolve()
+    test_file = Path(test_stars_path or config.TEST_STARS_FILE).resolve()
 
-    # Fallback response representing the audited 14/14 state
+    if sub_file.is_file():
+        try:
+            return validate_submission(sub_file, test_stars_path=test_file, verbose=False)
+        except Exception as e:
+            logger.error(f"Validator execution error: {e}", exc_info=True)
+            return {
+                "file": sub_file.name,
+                "path": str(sub_file),
+                "status": "FAILED",
+                "passed_all": False,
+                "artifact_checks_passed": False,
+                "test_data_status": "FAILED",
+                "failures": [f"Validator execution error: {e}"],
+                "warnings": [],
+                "blocked": [],
+                "class_distribution": {}
+            }
+
     return {
-        "file": "submission_FINAL.csv",
-        "path": str(SUBMISSION_FILE),
-        "exists": SUBMISSION_FILE.is_file(),
-        "readable": SUBMISSION_FILE.is_file(),
-        "exact_7000_rows": True,
-        "exact_two_columns": True,
-        "exact_column_names": True,
-        "id_match_test_stars": True,
-        "id_order_correct": True,
-        "no_duplicate_ids": True,
-        "no_null_ids": True,
-        "no_null_labels": True,
-        "no_whitespace_labels": True,
-        "all_classes_valid": True,
-        "all_eight_classes_represented": True,
-        "no_index_column": True,
-        "read_back_success": True,
-        "passed_all": True,
-        "failures": [],
-        "class_distribution": VERIFIED_TEST_CLASS_COUNTS
+        "file": sub_file.name,
+        "path": str(sub_file),
+        "status": "FAILED",
+        "passed_all": False,
+        "artifact_checks_passed": False,
+        "test_data_status": "NOT_RUN",
+        "failures": [f"Submission file not found at {sub_file.name}"],
+        "warnings": [],
+        "blocked": [],
+        "class_distribution": {}
     }

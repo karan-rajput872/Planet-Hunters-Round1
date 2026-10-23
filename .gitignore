@@ -71,6 +71,7 @@ desktop.ini
 # Competition Datasets (Strictly exclude all raw & processed competition data)
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/test_stars.csv
 data/processed/*
 !data/processed/.gitkeep
 data/*.csv
