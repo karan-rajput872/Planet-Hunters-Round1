@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from dashboard.data_loader import PROJECT_METRICS, MODEL_BENCHMARKS, CLASS_EVALUATION_METRICS
-from dashboard.styles import get_plotly_layout
+from dashboard.styles import get_plotly_layout, render_html
 
 def render_performance(theme: str = "creamy"):
     """Renders Key Model Performance (Section C) and Model Evaluation & Error Analysis (Section G)."""
@@ -22,7 +22,7 @@ def render_performance(theme: str = "creamy"):
     # =========================================================================
     # SECTION C: KEY MODEL PERFORMANCE (COMPACT KPI CARDS)
     # =========================================================================
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 8px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
             <div>
@@ -37,69 +37,69 @@ def render_performance(theme: str = "creamy"):
             </span>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # 5 Compact, Equal-Height KPI Cards
     k1, k2, k3, k4, k5 = st.columns(5)
 
     with k1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-container" style="border-top: 3px solid {primary_accent};">
             <div class="metric-label">Standard OOF F1</div>
             <div class="metric-value" style="color: {primary_accent};">{PROJECT_METRICS['champion_oof_f1']:.4f}</div>
             <div class="metric-caption">18,000 Out-Of-Fold Stars</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with k2:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-container" style="border-top: 3px solid {secondary_accent};">
             <div class="metric-label">Detector OOF F1</div>
             <div class="metric-value" style="color: {secondary_accent};">{PROJECT_METRICS['detector_oof_f1']:.4f}</div>
             <div class="metric-caption">Hardware Holdout Transfer</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with k3:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-container">
             <div class="metric-label">Training Dataset</div>
             <div class="metric-value">{PROJECT_METRICS['training_stars']:,}</div>
             <div class="metric-caption">8 Balanced Classes</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with k4:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-container">
             <div class="metric-label">Test Predictions</div>
             <div class="metric-value">{PROJECT_METRICS['test_stars']:,}</div>
             <div class="metric-caption">Deterministic Outputs</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with k5:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-container">
             <div class="metric-label">Target Taxonomy</div>
             <div class="metric-value">{PROJECT_METRICS['classes_count']} Classes</div>
             <div class="metric-caption">Macro F1 Metric</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 24px;'></div>")
 
     # =========================================================================
     # SECTION G: MODEL EVALUATION & ERROR ANALYSIS
     # =========================================================================
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 12px;">
         <h2>Model Evaluation & Error Analysis</h2>
         <div style="color: {text_secondary}; font-size: 0.85rem;">
             Empirical benchmark progression, class-wise F1 distribution, and astrophysical decision boundary analysis.
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     col_bench, col_perclass = st.columns([1.1, 1.0])
 
@@ -175,7 +175,7 @@ def render_performance(theme: str = "creamy"):
     err1, err2, err3 = st.columns(3)
 
     with err1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 175px;">
             <div style="font-weight: 600; font-size: 0.90rem; color: {primary_accent}; margin-bottom: 6px;">
                 Planet vs. Quiet Star Boundary
@@ -185,10 +185,10 @@ def render_performance(theme: str = "creamy"):
                 Transit-search BLS signal-to-noise ratio and in-dip variance clustering provide the primary statistical discriminator.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with err2:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 175px;">
             <div style="font-weight: 600; font-size: 0.90rem; color: {secondary_accent}; margin-bottom: 6px;">
                 Starspots vs. Quiet Star Modulation
@@ -198,10 +198,10 @@ def render_performance(theme: str = "creamy"):
                 Autocorrelation lag analysis and Von Neumann variability ratios isolate coherent rotational trends from random white noise.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with err3:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 175px;">
             <div style="font-weight: 600; font-size: 0.90rem; color: #5B7C99; margin-bottom: 6px;">
                 Detector Domain Shift Mitigation
@@ -211,4 +211,4 @@ def render_performance(theme: str = "creamy"):
                 Camera/epoch common-mode cotrending reduced Kolmogorov-Smirnov train-to-test drift by 60.3%, lifting detector OOF F1 from 0.42 to 0.6336.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)

@@ -7,6 +7,7 @@ Search, filter, inspect, and export individual predictions with zero unhandled e
 import streamlit as st
 import pandas as pd
 from dashboard.data_loader import load_submission_data, CLASS_METADATA
+from dashboard.styles import render_html
 
 def render_explorer(theme: str = "creamy"):
     """Renders the Prediction Explorer table with live search, filters, and pagination."""
@@ -19,7 +20,7 @@ def render_explorer(theme: str = "creamy"):
     df = load_submission_data()
 
     if df is None or len(df) == 0:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card">
             <h2>Prediction Explorer</h2>
             <p style="color: {text_secondary}; font-size: 0.88rem; margin-top: 4px;">
@@ -30,12 +31,12 @@ def render_explorer(theme: str = "creamy"):
                 All 7,000 predictions are bitwise-verified with SHA-256: <code>6A378EAE...330E</code>.
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         return
 
     total_stars = len(df)
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div>
@@ -49,7 +50,7 @@ def render_explorer(theme: str = "creamy"):
             </span>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # Filter Controls
     c_search, c_filter, c_sort, c_page = st.columns([1.5, 1.8, 1.3, 1.0])
@@ -89,11 +90,11 @@ def render_explorer(theme: str = "creamy"):
     # Display Metrics and Download Button
     col_count, col_dl = st.columns([2.5, 1.5])
     with col_count:
-        st.markdown(f"""
+        render_html(f"""
         <div style="font-size: 0.82rem; color: {text_secondary}; padding-top: 6px;">
             Showing <strong>{min(rows_per_page, match_count)}</strong> of <strong>{match_count:,}</strong> matching targets
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with col_dl:
         csv_data = filtered_df.to_csv(index=False).encode('utf-8')

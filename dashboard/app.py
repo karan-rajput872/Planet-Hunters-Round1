@@ -14,7 +14,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from dashboard.styles import get_theme_css
+from dashboard.styles import get_theme_css, render_html
 from dashboard.components.hero import render_hero
 from dashboard.components.performance import render_performance
 from dashboard.components.classification import render_classification
@@ -33,7 +33,7 @@ st.set_page_config(
 )
 
 # Apply Professional Warm Creamy CSS
-st.markdown(get_theme_css("creamy"), unsafe_allow_html=True)
+render_html(get_theme_css("creamy"))
 
 # Sidebar Navigation & Telemetry
 with st.sidebar:
@@ -42,7 +42,7 @@ with st.sidebar:
     primary_accent = "#647C70"
     border_col = "#E7E0D3"
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="padding: 2px 0 14px 0; border-bottom: 1px solid {border_col};">
         <div style="display: flex; align-items: center; gap: 10px;">
             <div style="width: 32px; height: 32px; border-radius: 6px; background-color: {primary_accent}; color: #FFFDF8; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.95rem; flex-shrink: 0;">
@@ -58,12 +58,12 @@ with st.sidebar:
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
-    st.markdown("<div style='margin-top: 14px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-top: 14px;'></div>")
 
     # Simplified Public Navigation (Phase 6, 7, 8 completely removed from public UI)
-    st.markdown(f"<div style='font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: {text_secondary}; margin-bottom: 6px; letter-spacing: 0.04em;'>Platform Navigation</div>", unsafe_allow_html=True)
+    render_html(f"<div style='font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: {text_secondary}; margin-bottom: 6px; letter-spacing: 0.04em;'>Platform Navigation</div>")
     view_mode = st.radio(
         "Navigation Station Label Hidden",
         options=[
@@ -80,10 +80,10 @@ with st.sidebar:
         label_visibility="collapsed"
     )
 
-    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-top: 20px;'></div>")
 
     # Compact Sidebar Telemetry Card
-    st.markdown(f"""
+    render_html(f"""
     <div style="background-color: #FFFDF8; border: 1px solid {border_col}; border-radius: 8px; padding: 12px; font-size: 0.78rem; box-shadow: 0 1px 2px rgba(41, 45, 50, 0.02);">
         <div style="font-weight: 700; text-transform: uppercase; font-size: 0.70rem; color: {primary_accent}; margin-bottom: 8px; letter-spacing: 0.04em;">
             System Telemetry
@@ -109,14 +109,14 @@ with st.sidebar:
             <span style="font-family: 'JetBrains Mono'; color: {text_primary};">7,000 Stars</span>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-top: 16px; font-size: 0.70rem; color: {text_secondary}; text-align: center; line-height: 1.45;">
         Planet Hunters • Hack4Hack 2026<br>
         Warm Creamy Scientific UI
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 # Main Application Routing
 theme = "creamy"
@@ -124,17 +124,17 @@ theme = "creamy"
 if view_mode == "Complete Platform View":
     render_hero(theme)
     render_performance(theme)
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 24px;'></div>")
     render_classification(theme)
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 24px;'></div>")
     render_architecture(theme)
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 24px;'></div>")
     render_features(theme)
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 24px;'></div>")
     render_validator(theme)
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 24px;'></div>")
     render_explorer(theme)
-    st.markdown("<div style='margin-bottom: 24px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 24px;'></div>")
     render_info(theme)
 
 elif view_mode == "Overview & Performance":
@@ -166,9 +166,9 @@ elif view_mode == "Artifacts & Documentation":
     render_info(theme)
 
 # Editorial Footer
-st.markdown(f"""
+render_html(f"""
 <div style="margin-top: 40px; padding: 18px 0 10px 0; border-top: 1px solid {border_col}; text-align: center; font-size: 0.76rem; color: {text_secondary};">
     Planet Hunters — Find New Worlds in Starlight • ML Challenge Hack4Hack 2026 (Round 1)<br>
     Engineered with Python 3.11, Streamlit, Plotly, LightGBM, HistGradientBoosting, and CatBoost • Audited & Reproducible Pipeline
 </div>
-""", unsafe_allow_html=True)
+""")

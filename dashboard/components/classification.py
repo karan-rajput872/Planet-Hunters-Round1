@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from dashboard.data_loader import get_class_summary
-from dashboard.styles import get_class_colors, get_plotly_layout
+from dashboard.styles import get_class_colors, get_plotly_layout, render_html
 
 def render_classification(theme: str = "creamy"):
     """Renders Section D: 8-Class Distribution Visualizations and Equal-Height Taxonomy Grid."""
@@ -21,7 +21,7 @@ def render_classification(theme: str = "creamy"):
     border_col = "#E7E0D3"
     card_bg = "#FFFDF8"
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div>
@@ -35,7 +35,7 @@ def render_classification(theme: str = "creamy"):
             </span>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # 1. Distribution Visualizations: Horizontal Bar Chart & Donut Chart
     col_bar, col_donut = st.columns([1.25, 0.95])
@@ -105,12 +105,12 @@ def render_classification(theme: str = "creamy"):
         st.plotly_chart(fig_donut, use_container_width=True, config={"displayModeBar": False})
 
     # 2. Equal-Sized 8-Class Reference Cards (2 rows of 4 columns)
-    st.markdown("<h3 style='margin-top: 14px; margin-bottom: 12px;'>Astrophysical Class Directory & Diagnostic Markers</h3>", unsafe_allow_html=True)
+    render_html("<h3 style='margin-top: 14px; margin-bottom: 12px;'>Astrophysical Class Directory &amp; Diagnostic Markers</h3>")
 
     def render_class_card(row, col_container):
         c_color = class_colors.get(row["class"], primary_accent)
         with col_container:
-            st.markdown(f"""
+            render_html(f"""
             <div style="background-color: {card_bg}; border: 1px solid {border_col}; border-top: 3px solid {c_color}; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; min-height: 185px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(41, 45, 50, 0.02);">
                 <div>
                     <div style="display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 4px;">
@@ -132,7 +132,7 @@ def render_classification(theme: str = "creamy"):
                     <span style="font-weight: 600; color: {c_color};">Key Marker:</span> {row.get('diagnostic_marker', row['signal_shape'])}
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
     # First row: 4 cards
     r1_cols = st.columns(4)

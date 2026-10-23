@@ -21,7 +21,7 @@ def render_validator(theme: str = "creamy"):
     border_col = "#E7E0D3"
     card_bg = "#FFFDF8"
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div>
@@ -36,7 +36,7 @@ def render_validator(theme: str = "creamy"):
             </span>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # Cache validation result in session state to avoid unnecessary reruns
     if "validation_result" not in st.session_state:
@@ -76,7 +76,7 @@ def render_validator(theme: str = "creamy"):
 
     with col_status:
         if status == "PASSED":
-            st.markdown(f"""
+            render_html(f"""
             <div style="display: flex; align-items: center; gap: 8px; height: 100%; padding: 4px 0;">
                 <span class="badge-status badge-passed" style="font-size: 0.82rem;">
                     ✓ AUDIT STATUS: PASSED (14/14 CHECKS VERIFIED)
@@ -85,9 +85,9 @@ def render_validator(theme: str = "creamy"):
                     Bitwise-approved champion satisfies all 14 schema and test-matching criteria.
                 </span>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         elif status == "BLOCKED":
-            st.markdown(f"""
+            render_html(f"""
             <div style="display: flex; align-items: center; gap: 8px; height: 100%; padding: 4px 0;">
                 <span class="badge-status badge-neutral" style="font-size: 0.82rem; border-color: {secondary_accent}; color: {secondary_accent};">
                     ARTIFACT INTEGRITY VERIFIED (12/12 PASSED • 2 BLOCKED)
@@ -96,10 +96,10 @@ def render_validator(theme: str = "creamy"):
                     Submission structure is valid. External dataset checks are BLOCKED (test_stars.csv not present in runtime).
                 </span>
             </div>
-            """, unsafe_allow_html=True)
+            """)
         else:
             failures_count = len(res.get("failures", []))
-            st.markdown(f"""
+            render_html(f"""
             <div style="display: flex; align-items: center; gap: 8px; height: 100%; padding: 4px 0;">
                 <span class="badge-status" style="background-color: #FDF2F2; border: 1px solid #F87171; color: #DC2626; font-size: 0.82rem;">
                     AUDIT FAILED ({failures_count} DEFECTS DETECTED)
@@ -108,7 +108,7 @@ def render_validator(theme: str = "creamy"):
                     Inspect the audit checklist table below for specific failure points.
                 </span>
             </div>
-            """, unsafe_allow_html=True)
+            """)
 
     # 14 Audit Checks Table divided into Stage A & Stage B
     checklist_stage_a = [
@@ -143,16 +143,10 @@ def render_validator(theme: str = "creamy"):
             st_text = "FAIL"
             badge_style = "background-color: #FDF2F2; border: 1px solid #F87171; color: #DC2626;"
 
-        return f"""
-        <tr style="border-bottom: 1px solid {border_col};">
-            <td style="padding: 6px 8px; font-family: 'JetBrains Mono'; color: {text_secondary};">{c['id']:02d}</td>
-            <td style="padding: 6px 8px; font-weight: 600;">{c['rule']}</td>
-            <td style="padding: 6px 8px; color: {text_secondary}; font-size: 0.76rem;">{c['desc']}</td>
-            <td style="padding: 6px 8px; text-align: right;">
-                <span class="badge-status" style="{badge_style}">{st_text}</span>
-            </td>
-        </tr>
-        """
+        return f'<tr style="border-bottom: 1px solid {border_col};"><td style="padding: 6px 8px; font-family: \'JetBrains Mono\'; color: {text_secondary};">{c["id"]:02d}</td><td style="padding: 6px 8px; font-weight: 600;">{c["rule"]}</td><td style="padding: 6px 8px; color: {text_secondary}; font-size: 0.76rem;">{c["desc"]}</td><td style="padding: 6px 8px; text-align: right;"><span class="badge-status" style="{badge_style}">{st_text}</span></td></tr>'
+
+    stage_a_rows = "".join(render_check_row(c) for c in checklist_stage_a)
+    stage_b_rows = "".join(render_check_row(c) for c in checklist_stage_b)
 
     render_html(f"""
     <div class="ph-card" style="margin-top: 14px; padding: 14px 18px;">
@@ -169,7 +163,7 @@ def render_validator(theme: str = "creamy"):
                 </tr>
             </thead>
             <tbody>
-                {''.join(render_check_row(c) for c in checklist_stage_a)}
+                {stage_a_rows}
             </tbody>
         </table>
         <div style="font-weight: 600; font-size: 0.85rem; color: {secondary_accent}; margin-bottom: 6px;">
@@ -185,7 +179,7 @@ def render_validator(theme: str = "creamy"):
                 </tr>
             </thead>
             <tbody>
-                {''.join(render_check_row(c) for c in checklist_stage_b)}
+                {stage_b_rows}
             </tbody>
         </table>
     </div>
@@ -194,8 +188,8 @@ def render_validator(theme: str = "creamy"):
     # Show warning notices if Stage B checks are blocked
     if res.get("warnings"):
         for w in res["warnings"]:
-            st.markdown(f"""
+            render_html(f"""
             <div style="margin-top: 8px; padding: 8px 12px; background-color: #F0EBDD; border-left: 3px solid {secondary_accent}; border-radius: 4px; font-size: 0.78rem; color: {text_secondary};">
                 <strong>Deployment Note:</strong> {w}
             </div>
-            """, unsafe_allow_html=True)
+            """)

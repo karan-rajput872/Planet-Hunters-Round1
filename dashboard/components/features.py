@@ -20,7 +20,7 @@ def render_features(theme: str = "creamy"):
     border_col = "#E7E0D3"
     card_bg = "#FFFDF8"
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div>
@@ -34,13 +34,13 @@ def render_features(theme: str = "creamy"):
             </span>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # 4 Feature Pillar Cards (Equal Height Grid)
     p1, p2, p3, p4 = st.columns(4)
 
     with p1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid #5B7C99;">
             <div style="color: #5B7C99; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
                 Pillar 1 • 32 Features
@@ -54,10 +54,10 @@ def render_features(theme: str = "creamy"):
                 • <strong>Common-Mode Residuals</strong>: Normalized baseline deviations.
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with p2:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid {primary_accent};">
             <div style="color: {primary_accent}; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
                 Pillar 2 • 24 Features
@@ -71,10 +71,10 @@ def render_features(theme: str = "creamy"):
                 • <strong>Binned Histogram Moments</strong>: Quantifies multimodal flux states.
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with p3:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid {secondary_accent};">
             <div style="color: {secondary_accent}; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
                 Pillar 3 • 16 Features
@@ -88,10 +88,10 @@ def render_features(theme: str = "creamy"):
                 • <strong>Fourier Harmonics</strong>: Peaks isolating pulsating stars (Cepheids, RR Lyrae).
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with p4:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 220px; border-top: 3px solid #738A58;">
             <div style="color: #738A58; font-weight: 700; text-transform: uppercase; font-size: 0.70rem; margin-bottom: 2px;">
                 Pillar 4 • 16 Features
@@ -105,22 +105,21 @@ def render_features(theme: str = "creamy"):
                 • <strong>2D Centroid Variance</strong>: Flags optical spacecraft pointing jitter.
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
-    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 20px;'></div>")
 
     # Interactive Phenomenon Lightcurve Explorer
-    st.markdown(f"""
-    <div class="ph-card">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
-            <div style="font-weight: 600; font-size: 0.95rem; color: {text_primary};">
-                Interactive Phenomenological Lightcurve Explorer
-            </div>
-            <span class="badge-status badge-neutral" style="font-size: 0.72rem;">
-                Scientific Simulation • Diagnostic Profiles
-            </span>
+    render_html(f"""
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;">
+        <div style="font-weight: 600; font-size: 0.95rem; color: {text_primary};">
+            Interactive Phenomenological Lightcurve Explorer
         </div>
-    """, unsafe_allow_html=True)
+        <span class="badge-status badge-neutral" style="font-size: 0.72rem;">
+            Scientific Simulation • Diagnostic Profiles
+        </span>
+    </div>
+    """)
 
     phenomenon_choice = st.selectbox(
         "Select an astronomical phenomenon to inspect its characteristic photometric profile and extracted features:",
@@ -205,15 +204,14 @@ def render_features(theme: str = "creamy"):
     fig_sim.update_layout(layout_sim)
     st.plotly_chart(fig_sim, use_container_width=True, config={"displayModeBar": False})
 
-    st.markdown(f"""
-    <div style="font-size: 0.82rem; color: {text_secondary}; line-height: 1.5; padding-top: 4px;">
+    render_html(f"""
+    <div style="font-size: 0.82rem; color: {text_secondary}; line-height: 1.5; padding-top: 4px; margin-bottom: 20px;">
         <strong>Astrophysical Interpretation:</strong> {desc}
     </div>
-    </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # Feature Group Ablation Table
-    st.markdown("<h3 style='margin-top: 20px; margin-bottom: 10px;'>Empirical Feature Group Ablation Evidence</h3>", unsafe_allow_html=True)
+    render_html("<h3 style='margin-top: 20px; margin-bottom: 10px;'>Empirical Feature Group Ablation Evidence</h3>")
     df_ablation = pd.DataFrame(FEATURE_GROUP_ABLATIONS)
 
     table_rows = ""

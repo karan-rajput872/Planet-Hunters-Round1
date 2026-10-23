@@ -7,6 +7,7 @@ Repository links, technical reports, submission artifact verification, and syste
 import streamlit as st
 from pathlib import Path
 from dashboard.data_loader import SUBMISSION_FILE, PROJECT_METRICS
+from dashboard.styles import render_html
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -19,7 +20,7 @@ def render_info(theme: str = "creamy"):
     border_col = "#E7E0D3"
     card_bg = "#FFFDF8"
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div>
@@ -33,12 +34,12 @@ def render_info(theme: str = "creamy"):
             </span>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     col_specs, col_docs = st.columns([1.1, 1.0])
 
     with col_specs:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="padding: 16px 20px;">
             <div style="font-weight: 600; font-size: 0.92rem; color: {text_primary}; margin-bottom: 12px;">
                 Engineering Specifications & Validation Baseline
@@ -88,10 +89,10 @@ def render_info(theme: str = "creamy"):
                 </tbody>
             </table>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with col_docs:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="padding: 16px 20px;">
             <div style="font-weight: 600; font-size: 0.92rem; color: {text_primary}; margin-bottom: 10px;">
                 Verified Documentation & Repository Registry
@@ -123,14 +124,14 @@ def render_info(theme: str = "creamy"):
                 </div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     # Approved Final Submission Artifact Verification Card
     sub_exists = SUBMISSION_FILE.is_file()
     sub_status_text = "Verified on disk (Ready in repository)" if sub_exists else "Audited in verification pipeline"
     sub_badge = "badge-passed" if sub_exists else "badge-neutral"
 
-    st.markdown(f"""
+    render_html(f"""
     <div class="ph-card" style="border-top: 3px solid {primary_accent}; padding: 16px 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px;">
             <div style="font-weight: 600; font-size: 0.90rem; color: {text_primary};">
@@ -145,4 +146,4 @@ def render_info(theme: str = "creamy"):
             • <strong>Ensemble Configuration:</strong> 50% LightGBM + 40% HistGradientBoosting + 10% CatBoost across 5 Stratified Folds
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)

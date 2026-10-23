@@ -102,5 +102,64 @@ class TestDashboardRendering(unittest.TestCase):
             except Exception as e:
                 self.fail(f"Component rendering raised exception: {e}")
 
+    def test_render_html_strips_leading_spaces_and_blank_lines(self):
+        """Checks that render_html completely strips leading whitespace from every line."""
+        original_hasattr = hasattr
+        def mock_hasattr(obj, name):
+            if obj is st and name == "html":
+                return False
+            return original_hasattr(obj, name)
+
+        with patch("builtins.hasattr", side_effect=mock_hasattr), \
+             patch.object(st, "markdown") as mock_markdown:
+            nested_html = """
+            <div>
+                <!-- comment here -->
+                <p>Paragraph with leading indent</p>
+
+                <span>Second child</span>
+            </div>
+            """
+            render_html(nested_html)
+            mock_markdown.assert_called_once()
+            output = mock_markdown.call_args[0][0]
+            for line in output.splitlines():
+                self.assertFalse(line.startswith(" "), f"Line should not have leading spaces: {line}")
+                self.assertFalse(line.startswith("\t"), f"Line should not have leading tabs: {line}")
+                self.assertTrue(len(line) > 0, "Should not contain empty lines")
+            self.assertNotIn("<!--", output)
+
+    def test_validator_generates_valid_table_markup_without_indentation(self):
+        """Verifies validator renders real HTML tables with zero indented lines."""
+        recorded_html = []
+        def mock_cols(spec, *args, **kwargs):
+            count = spec if isinstance(spec, int) else len(spec)
+            return [MagicMock() for _ in range(count)]
+
+        with patch("streamlit.html", create=True, side_effect=lambda s: recorded_html.append(s)), \
+             patch("streamlit.markdown", side_effect=lambda s, **kw: recorded_html.append(s)), \
+             patch("streamlit.columns", side_effect=mock_cols), \
+             patch("streamlit.button", return_value=False), \
+             patch("streamlit.download_button"):
+            render_validator("creamy")
+
+            # Check that table HTML was passed
+            table_snippets = [h for h in recorded_html if "<table" in h]
+            self.assertTrue(len(table_snippets) >= 1, "Expected audit table HTML")
+            total_tables = sum(h.count("<table") for h in table_snippets)
+            self.assertTrue(total_tables >= 2, "Expected at least 2 audit tables (Stage A and Stage B)")
+
+            for table_html in table_snippets:
+                self.assertIn("</table>", table_html)
+                self.assertIn("<tbody>", table_html)
+                self.assertIn("</tbody>", table_html)
+                self.assertIn("<tr", table_html)
+                self.assertIn("<td", table_html)
+                self.assertNotIn("<!--", table_html)
+                # Verify that no lines in the table have >= 4 leading spaces
+                for line in table_html.splitlines():
+                    self.assertFalse(line.startswith("    "), f"Indented line detected that could trigger codeblock: {line}")
+
 if __name__ == "__main__":
     unittest.main()
+

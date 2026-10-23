@@ -1,18 +1,34 @@
-import textwrap
+import re
 import streamlit as st
 
 def render_html(html_content: str):
     """
     Renders application-controlled HTML safely and cleanly.
-    Strips accidental multiline indentation using textwrap.dedent to prevent CommonMark
-    from treating indented HTML as code blocks (<pre><code>).
-    Uses st.html() when available, falling back to st.markdown(..., unsafe_allow_html=True).
+    1. Removes all HTML comments.
+    2. Strips leading and trailing whitespace from each line (guaranteeing 0 leading spaces).
+    3. Drops blank lines to prevent CommonMark from creating indented code blocks.
+    4. Prefers native st.html() when supported (Streamlit >= 1.34) to bypass Markdown parsing completely.
+    5. Falls back to st.markdown(..., unsafe_allow_html=True) with guaranteed zero-indent HTML lines.
     """
-    cleaned = textwrap.dedent(html_content).strip()
+    if not html_content:
+        return
+    raw = str(html_content)
+    # Remove all HTML comments
+    no_comments = re.sub(r'<!--.*?-->', '', raw, flags=re.DOTALL)
+    # Strip leading/trailing whitespace from each line and discard blank lines
+    lines = [line.strip() for line in no_comments.splitlines() if line.strip()]
+    if not lines:
+        return
+    sanitized = "\n".join(lines)
+
     if hasattr(st, "html"):
-        st.html(cleaned)
-    else:
-        st.markdown(cleaned, unsafe_allow_html=True)
+        try:
+            st.html(sanitized)
+            return
+        except Exception:
+            pass
+
+    st.markdown(sanitized, unsafe_allow_html=True)
 
 def get_theme_css(theme: str = "creamy") -> str:
     """

@@ -21,7 +21,7 @@ def render_architecture(theme: str = "creamy"):
     border_col = "#E7E0D3"
     card_bg = "#FFFDF8"
 
-    st.markdown(f"""
+    render_html(f"""
     <div style="margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
             <div>
@@ -36,13 +36,13 @@ def render_architecture(theme: str = "creamy"):
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
     # 4-Stage Pipeline Flow (Equal-Height Cards)
     s1, s2, s3, s4 = st.columns(4)
 
     with s1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 200px; border-top: 3px solid #5B7C99;">
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.70rem; font-weight: 700; color: #5B7C99; margin-bottom: 4px;">
                 STAGE 01
@@ -55,10 +55,10 @@ def render_architecture(theme: str = "creamy"):
                 to eliminate systematic instrumental drift across detector channels.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with s2:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 200px; border-top: 3px solid {primary_accent};">
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.70rem; font-weight: 700; color: {primary_accent}; margin-bottom: 4px;">
                 STAGE 02
@@ -71,10 +71,10 @@ def render_architecture(theme: str = "creamy"):
                 and 16 CCD centroid motion variance vectors.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with s3:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 200px; border-top: 3px solid {secondary_accent};">
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.70rem; font-weight: 700; color: {secondary_accent}; margin-bottom: 4px;">
                 STAGE 03
@@ -87,10 +87,10 @@ def render_architecture(theme: str = "creamy"):
                 Dual validation holds out entire detector channels to verify cross-hardware transferability.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with s4:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 200px; border-top: 3px solid #738A58;">
             <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.70rem; font-weight: 700; color: #738A58; margin-bottom: 4px;">
                 STAGE 04
@@ -103,9 +103,9 @@ def render_architecture(theme: str = "creamy"):
                 Combines leaf-wise, depth-wise, and symmetric trees to suppress individual model variance.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
-    st.markdown("<div style='margin-bottom: 16px;'></div>", unsafe_allow_html=True)
+    render_html("<div style='margin-bottom: 16px;'></div>")
 
     # Architecture Visual Asset
     arch_image = ARCH_IMAGE_PORTFOLIO if ARCH_IMAGE_PORTFOLIO.is_file() else ARCH_IMAGE_MAIN
@@ -116,13 +116,13 @@ def render_architecture(theme: str = "creamy"):
         </div>
         """)
         st.image(str(arch_image), use_container_width=True, caption="Figure 1: Planet Hunters End-to-End Machine Learning Architecture & Prediction Pipeline")
-        st.markdown("<div style='margin-bottom: 16px;'></div>", unsafe_allow_html=True)
+        render_html("<div style='margin-bottom: 16px;'></div>")
 
     # Tri-Ensemble Models Breakdown (3 Equal Columns)
     m1, m2, m3 = st.columns(3)
 
     with m1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 165px; border-top: 3px solid {primary_accent};">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <span style="font-weight: 600; font-size: 0.90rem; color: {text_primary};">LightGBM (Leaf-Wise)</span>
@@ -132,10 +132,10 @@ def render_architecture(theme: str = "creamy"):
                 Gradient-based one-side sampling (GOSS) and exclusive feature bundling. Specializes in rapid, highly non-linear decision splits across transit signal metrics.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with m2:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 165px; border-top: 3px solid {secondary_accent};">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <span style="font-weight: 600; font-size: 0.90rem; color: {text_primary};">HistGradientBoosting</span>
@@ -145,10 +145,10 @@ def render_architecture(theme: str = "creamy"):
                 Scikit-learn native depth-wise histogram binning. Acts as an architectural regularizer, dampening individual deep leaf overfitting on subtle quiet-star noise.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with m3:
-        st.markdown(f"""
+        render_html(f"""
         <div class="ph-card" style="height: 100%; min-height: 165px; border-top: 3px solid #738A58;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <span style="font-weight: 600; font-size: 0.90rem; color: {text_primary};">CatBoost (Symmetric)</span>
@@ -158,4 +158,4 @@ def render_architecture(theme: str = "creamy"):
                 Oblivious decision trees with ordered boosting. Provides structural architectural diversity, preventing prediction over-confidence in minority classes.
             </p>
         </div>
-        """, unsafe_allow_html=True)
+        """)
