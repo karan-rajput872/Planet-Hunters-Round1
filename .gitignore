@@ -33,7 +33,8 @@ build/
 develop-eggs/
 eggs/
 .eggs/
-lib/
+/lib/
+!web/lib/
 lib64/
 parts/
 sdist/

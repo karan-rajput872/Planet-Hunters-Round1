@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  --canvas: #F7F4EC;
+  --card: #FFFDF8;
+  --card-hover: #FBF7EE;
+  --surface: #F0EBDD;
+  --border: #E7E0D3;
+  --border-subtle: #EFE9DD;
+  --text-primary: #292D32;
+  --text-secondary: #70736F;
+  --text-muted: #949692;
+  --primary-accent: #647C70;
+  --primary-hover: #53675D;
+  --secondary-accent: #A58B65;
+  --badge-sage-bg: #EAEFE8;
+  --badge-sage-border: #C8D7C4;
+  --badge-sage-text: #3F6350;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--text-primary);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom utility classes matching the warm creamy scientific identity */
+.bg-canvas { background-color: var(--canvas); }
+.bg-card-creamy { background-color: var(--card); }
+.bg-surface-creamy { background-color: var(--surface); }
+.border-creamy { border-color: var(--border); }
+.border-creamy-subtle { border-color: var(--border-subtle); }
+.text-creamy-primary { color: var(--text-primary); }
+.text-creamy-secondary { color: var(--text-secondary); }
+.text-creamy-muted { color: var(--text-muted); }
+.text-creamy-accent { color: var(--primary-accent); }
+.text-creamy-bronze { color: var(--secondary-accent); }
+.bg-creamy-accent { background-color: var(--primary-accent); }
+.bg-creamy-accent-hover:hover { background-color: var(--primary-hover); }
+
+/* Scientific UI Card */
+.scientific-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(41, 45, 50, 0.03);
+  transition: all 0.15s ease-in-out;
+}
+
+.scientific-card:hover {
+  box-shadow: 0 4px 12px rgba(41, 45, 50, 0.05);
+}
+
+/* Clean Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-accent);
+}
