@@ -28,34 +28,38 @@ export default function Navbar({ activeSection = 'overview' }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand Identity */}
-          <Link href="#overview" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg bg-creamy-accent text-white flex items-center justify-center font-bold text-sm shadow-sm group-hover:scale-105 transition-transform">
+          <Link
+            href="#overview"
+            className="flex items-center gap-3 shrink-0 group focus:outline-hidden"
+            aria-label="Planet Hunters Home"
+          >
+            <div className="w-9 h-9 rounded-lg bg-creamy-accent text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0 group-hover:scale-105 transition-transform select-none">
               PH
             </div>
-            <div>
+            <div className="flex flex-col justify-center min-w-0">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-base tracking-tight text-creamy-primary">
+                <span className="font-bold text-[15px] sm:text-base tracking-tight text-creamy-primary whitespace-nowrap leading-tight">
                   PLANET HUNTERS
                 </span>
-                <span className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded bg-[#EAEFE8] text-[#3F6350] border border-[#C8D7C4]">
+                <span className="hidden sm:inline-flex items-center whitespace-nowrap px-1.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded bg-[#EAEFE8] text-[#3F6350] border border-[#C8D7C4] leading-normal shrink-0">
                   Round 1 Champion
                 </span>
               </div>
-              <p className="text-xs text-creamy-secondary hidden sm:block">
+              <p className="text-[11px] text-creamy-secondary hidden sm:block leading-tight tracking-normal whitespace-nowrap mt-0.5">
                 Scientific Intelligence Platform • Priyanshu Karan
               </p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <a
                   key={link.id}
                   href={link.href}
-                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+                  className={`px-2 xl:px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-colors ${
                     isActive
                       ? 'bg-[#EAEFE8] text-creamy-accent font-semibold'
                       : 'text-creamy-secondary hover:text-creamy-primary hover:bg-[#F0EBDD]/60'
@@ -68,12 +72,12 @@ export default function Navbar({ activeSection = 'overview' }: NavbarProps) {
           </nav>
 
           {/* External Links & Actions */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
             <a
               href={PLATFORM_INFO.liveStreamlitUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-creamy bg-[#FFFDF8] hover:bg-[#F0EBDD]/50 text-creamy-secondary transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 text-xs font-medium rounded-md border border-creamy bg-[#FFFDF8] hover:bg-[#F0EBDD]/50 text-creamy-secondary transition-colors whitespace-nowrap"
             >
               <span>Streamlit App</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -83,7 +87,7 @@ export default function Navbar({ activeSection = 'overview' }: NavbarProps) {
               href={PLATFORM_INFO.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md bg-creamy-accent text-white hover:bg-creamy-accent-hover shadow-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 text-xs font-medium rounded-md bg-creamy-accent text-white hover:bg-creamy-accent-hover shadow-xs transition-colors whitespace-nowrap"
             >
               <span>GitHub</span>
               <ExternalLink className="w-3.5 h-3.5" />
